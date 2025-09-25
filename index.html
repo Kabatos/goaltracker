@@ -4,6 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎯 GoalTracker</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="Application de gestion d'objectifs et de tâches personnelles">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="GoalTracker">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icon-16.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
     <style>
         /* Reset et base */
         * {
@@ -1572,6 +1587,19 @@
 
         // Initialisation
         updateStats();
+
+        // PWA Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('sw.js')
+                    .then(function(registration) {
+                        console.log('Service Worker enregistré avec succès');
+                    })
+                    .catch(function(error) {
+                        console.log('Échec de l\'enregistrement du Service Worker');
+                    });
+            });
+        }
     </script>
 </body>
 </html>
