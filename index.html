@@ -318,17 +318,24 @@
         }
 
         .form-group input,
-        .form-group textarea {
+        .form-group textarea,
+        .form-group select {
             width: 100%;
             padding: 0.8rem;
             border: 2px solid #e2e8f0;
             border-radius: 8px;
             font-size: 1rem;
             transition: border-color 0.3s ease;
+            background: white;
+        }
+
+        .form-group select {
+            cursor: pointer;
         }
 
         .form-group input:focus,
-        .form-group textarea:focus {
+        .form-group textarea:focus,
+        .form-group select:focus {
             outline: none;
             border-color: #667eea;
         }
@@ -574,6 +581,48 @@
             border-radius: 12px;
             background: #f7fafc;
             color: #4a5568;
+        }
+
+        /* Todo metadata */
+        .todo-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.8rem;
+            font-size: 0.8rem;
+        }
+
+        .todo-priority, .todo-category, .todo-due-date {
+            padding: 0.3rem 0.6rem;
+            border-radius: 12px;
+            font-weight: 500;
+            background: #f7fafc;
+            color: #4a5568;
+        }
+
+        .todo-priority.priority-low {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .todo-priority.priority-medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .todo-priority.priority-high {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .todo-category {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+
+        .todo-due-date {
+            background: #e6f3ff;
+            color: #0066cc;
         }
 
         /* Todo stats */
@@ -860,6 +909,35 @@
                         <div class="form-group">
                             <label>Description</label>
                             <textarea id="todo-description" placeholder="Décrivez votre tâche..." rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Niveau de priorité *</label>
+                            <select id="todo-priority" required>
+                                <option value="low">🟢 Faible</option>
+                                <option value="medium" selected>🟡 Moyenne</option>
+                                <option value="high">🔴 Élevée</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Catégorie</label>
+                            <select id="todo-category">
+                                <option value="">Sélectionner une catégorie</option>
+                                <option value="work">💼 Travail</option>
+                                <option value="personal">👤 Personnel</option>
+                                <option value="health">🏥 Santé</option>
+                                <option value="finance">💰 Finance</option>
+                                <option value="education">📚 Éducation</option>
+                                <option value="home">🏠 Maison</option>
+                                <option value="shopping">🛒 Shopping</option>
+                                <option value="other">📋 Autre</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Date d'échéance (optionnel)</label>
+                            <input type="date" id="todo-due-date">
                         </div>
 
                         <div class="form-actions">
@@ -1182,10 +1260,18 @@
         }
 
         function deleteTodo(todoId) {
-            todos = todos.filter(t => t.id !== todoId);
-            localStorage.setItem('todos', JSON.stringify(todos));
-            updateStats();
-            renderTodos();
+            const todo = todos.find(t => t.id === todoId);
+            if (!todo) return;
+
+            const confirmMessage = `Supprimer la tâche "${todo.title}" ?\n\nCette action est irréversible.`;
+            
+            if (confirm(confirmMessage)) {
+                todos = todos.filter(t => t.id !== todoId);
+                localStorage.setItem('todos', JSON.stringify(todos));
+                updateStats();
+                renderTodos();
+                alert('Tâche supprimée !');
+            }
         }
 
         function renderTodos(filter = 'all') {
@@ -1255,6 +1341,11 @@
                             </div>
                         </div>
                         ${todo.description ? `<p class="todo-description">${todo.description}</p>` : ''}
+                        <div class="todo-meta">
+                            ${todo.priority ? `<span class="todo-priority priority-${todo.priority}">${getPriorityIcon(todo.priority)} ${getPriorityText(todo.priority)}</span>` : ''}
+                            ${todo.category ? `<span class="todo-category">${getCategoryIcon(todo.category)} ${getCategoryText(todo.category)}</span>` : ''}
+                            ${todo.dueDate ? `<span class="todo-due-date">📅 ${new Date(todo.dueDate).toLocaleDateString('fr-FR')}</span>` : ''}
+                        </div>
                     </div>
                 </div>
             `).join('');
@@ -1368,6 +1459,53 @@
             }
         }
 
+        // Fonctions utilitaires pour les tâches
+        function getPriorityIcon(priority) {
+            const icons = {
+                'low': '🟢',
+                'medium': '🟡',
+                'high': '🔴'
+            };
+            return icons[priority] || '🟡';
+        }
+
+        function getPriorityText(priority) {
+            const texts = {
+                'low': 'Faible',
+                'medium': 'Moyenne',
+                'high': 'Élevée'
+            };
+            return texts[priority] || 'Moyenne';
+        }
+
+        function getCategoryIcon(category) {
+            const icons = {
+                'work': '💼',
+                'personal': '👤',
+                'health': '🏥',
+                'finance': '💰',
+                'education': '📚',
+                'home': '🏠',
+                'shopping': '🛒',
+                'other': '📋'
+            };
+            return icons[category] || '📋';
+        }
+
+        function getCategoryText(category) {
+            const texts = {
+                'work': 'Travail',
+                'personal': 'Personnel',
+                'health': 'Santé',
+                'finance': 'Finance',
+                'education': 'Éducation',
+                'home': 'Maison',
+                'shopping': 'Shopping',
+                'other': 'Autre'
+            };
+            return texts[category] || 'Autre';
+        }
+
         // Événements
         document.getElementById('goal-form').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -1404,6 +1542,9 @@
             
             const title = document.getElementById('todo-title').value.trim();
             const description = document.getElementById('todo-description').value.trim();
+            const priority = document.getElementById('todo-priority').value;
+            const category = document.getElementById('todo-category').value;
+            const dueDate = document.getElementById('todo-due-date').value;
 
             if (!title) {
                 alert('Veuillez remplir le titre.');
@@ -1413,7 +1554,9 @@
             addTodo({
                 title,
                 description,
-                priority: 'medium'
+                priority,
+                category: category || undefined,
+                dueDate: dueDate ? new Date(dueDate).toISOString() : undefined
             });
 
             // Réinitialiser le formulaire
