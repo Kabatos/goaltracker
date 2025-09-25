@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>üéØ GoalTracker</title>
+    <title>🎯 GoalTracker</title>
     <style>
         /* Reset et base */
         * {
@@ -169,7 +169,7 @@
             border-color: #5a67d8;
         }
 
-        /* Section T√¢ches */
+        /* Section Tâches */
         .todos-section {
             background: rgba(255, 255, 255, 0.95);
             border-radius: 16px;
@@ -720,12 +720,12 @@
 <body>
     <div class="app">
         <header class="app-header">
-            <h1>üéØ GoalTracker</h1>
+            <h1>🎯 GoalTracker</h1>
             <nav>
-                <button id="home-btn" class="active">üè†</button>
-                <button id="goals-btn">üéØ</button>
-                <button id="todos-btn">üìù</button>
-                <button id="history-btn">üïê</button>
+                <button id="home-btn" class="active">🏠</button>
+                <button id="goals-btn">🎯</button>
+                <button id="todos-btn">📝</button>
+                <button id="history-btn">🕐</button>
             </nav>
         </header>
 
@@ -734,32 +734,32 @@
             <div id="home-page" class="home">
                 <!-- Section Objectifs -->
                 <div class="no-goals">
-                    <div class="no-goals-icon">üéØ</div>
-                    <h2>G√©rez vos objectifs</h2>
-                    <p class="motivation-text">"Si vous ne visualisez pas vos r√™ves, vous n'obtiendrez rien de concret. Chaque objectif clair est un pas vers votre r√©ussite !"</p>
-                    <p>Cr√©ez et suivez vos objectifs financiers</p>
+                    <div class="no-goals-icon">🎯</div>
+                    <h2>Gérez vos objectifs</h2>
+                    <p class="motivation-text">"Si vous ne visualisez pas vos rêves, vous n'obtiendrez rien de concret. Chaque objectif clair est un pas vers votre réussite !"</p>
+                    <p>Créez et suivez vos objectifs financiers</p>
                     
                     <div class="quick-actions">
                         <div class="actions-row">
                             <button class="btn-quick-create" onclick="showCreateGoal()">+ Objectif</button>
-                            <button class="btn-quick-active-goals" onclick="showGoals()">üéØ Objectifs en cours</button>
+                            <button class="btn-quick-active-goals" onclick="showGoals()">🎯 Objectifs en cours</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Section T√¢ches -->
+                <!-- Section Tâches -->
                 <div class="todos-section">
                     <div class="todos-header">
-                        <div class="todos-icon">üìù</div>
-                        <h3>Planifier des t√¢ches</h3>
-                        <p class="motivation-text">"Si vous ne planifiez rien, vous gaspillez votre temps pr√©cieux. Chaque minute organis√©e est un investissement dans votre avenir !"</p>
+                        <div class="todos-icon">📝</div>
+                        <h3>Planifier des tâches</h3>
+                        <p class="motivation-text">"Si vous ne planifiez rien, vous gaspillez votre temps précieux. Chaque minute organisée est un investissement dans votre avenir !"</p>
                         <p>Organiser votre routine</p>
                     </div>
                     
                     <div class="todos-actions">
                         <div class="actions-row">
-                            <button class="btn-quick-todo" onclick="showCreateTodo()">üìù T√¢che</button>
-                            <button class="btn-quick-active-todos" onclick="showTodos()">üìã T√¢ches en cours</button>
+                            <button class="btn-quick-todo" onclick="showCreateTodo()">📝 Tâche</button>
+                            <button class="btn-quick-active-todos" onclick="showTodos()">📋 Tâches en cours</button>
                         </div>
                     </div>
                 </div>
@@ -769,7 +769,7 @@
                     <!-- Ligne 1: Objectifs -->
                     <div class="stats-row">
                         <div class="stat-card" onclick="showGoals('active')">
-                            <div class="stat-icon">üéØ</div>
+                            <div class="stat-icon">🎯</div>
                             <div class="stat-content">
                                 <div class="stat-number" id="active-goals-count">0</div>
                                 <div class="stat-label">Objectifs actifs</div>
@@ -777,40 +777,40 @@
                         </div>
                         
                         <div class="stat-card" onclick="showGoals('completed')">
-                            <div class="stat-icon">‚úÖ</div>
+                            <div class="stat-icon">✅</div>
                             <div class="stat-content">
                                 <div class="stat-number" id="completed-goals-count">0</div>
-                                <div class="stat-label">Objectifs termin√©s</div>
+                                <div class="stat-label">Objectifs terminés</div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Ligne 2: T√¢ches -->
+                    <!-- Ligne 2: Tâches -->
                     <div class="stats-row">
                         <div class="stat-card" onclick="showTodos('active')">
-                            <div class="stat-icon">üìù</div>
+                            <div class="stat-icon">📝</div>
                             <div class="stat-content">
                                 <div class="stat-number" id="active-todos-count">0</div>
-                                <div class="stat-label">T√¢ches en cours</div>
+                                <div class="stat-label">Tâches en cours</div>
                             </div>
                         </div>
                         
                         <div class="stat-card" onclick="showTodos('completed')">
-                            <div class="stat-icon">‚úÖ</div>
+                            <div class="stat-icon">✅</div>
                             <div class="stat-content">
                                 <div class="stat-number" id="completed-todos-count">0</div>
-                                <div class="stat-label">T√¢ches termin√©es</div>
+                                <div class="stat-label">Tâches terminées</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Page cr√©ation objectif -->
+            <!-- Page création objectif -->
             <div id="create-goal-page" class="hidden">
                 <div class="page-header">
-                    <button class="btn-back" onclick="showHome()">‚Üê Retour</button>
-                    <h2>üéØ Cr√©er un objectif</h2>
+                    <button class="btn-back" onclick="showHome()">← Retour</button>
+                    <h2>🎯 Créer un objectif</h2>
                 </div>
 
                 <div class="form-container">
@@ -822,7 +822,7 @@
 
                         <div class="form-group">
                             <label>Description</label>
-                            <textarea id="goal-description" placeholder="D√©crivez votre objectif..." rows="3"></textarea>
+                            <textarea id="goal-description" placeholder="Décrivez votre objectif..." rows="3"></textarea>
                         </div>
 
                         <div class="form-group">
@@ -837,34 +837,34 @@
 
                         <div class="form-actions">
                             <button type="button" onclick="showHome()">Annuler</button>
-                            <button type="submit" class="btn-primary">Cr√©er l'objectif</button>
+                            <button type="submit" class="btn-primary">Créer l'objectif</button>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <!-- Page cr√©ation t√¢che -->
+            <!-- Page création tâche -->
             <div id="create-todo-page" class="hidden">
                 <div class="page-header">
-                    <button class="btn-back" onclick="showHome()">‚Üê Retour</button>
-                    <h2>üìù Cr√©er une t√¢che</h2>
+                    <button class="btn-back" onclick="showHome()">← Retour</button>
+                    <h2>📝 Créer une tâche</h2>
                 </div>
 
                 <div class="form-container">
                     <form id="todo-form">
                         <div class="form-group">
-                            <label>Titre de la t√¢che *</label>
+                            <label>Titre de la tâche *</label>
                             <input type="text" id="todo-title" placeholder="Ex: Faire les courses" required>
                         </div>
 
                         <div class="form-group">
                             <label>Description</label>
-                            <textarea id="todo-description" placeholder="D√©crivez votre t√¢che..." rows="3"></textarea>
+                            <textarea id="todo-description" placeholder="Décrivez votre tâche..." rows="3"></textarea>
                         </div>
 
                         <div class="form-actions">
                             <button type="button" onclick="showHome()">Annuler</button>
-                            <button type="submit" class="btn-primary">Cr√©er la t√¢che</button>
+                            <button type="submit" class="btn-primary">Créer la tâche</button>
                         </div>
                     </form>
                 </div>
@@ -873,31 +873,31 @@
             <!-- Page objectifs -->
             <div id="goals-page" class="hidden">
                 <div class="page-header">
-                    <button class="btn-back" onclick="showHome()">‚Üê Retour</button>
-                    <h2>üéØ Mes Objectifs</h2>
+                    <button class="btn-back" onclick="showHome()">← Retour</button>
+                    <h2>🎯 Mes Objectifs</h2>
                 </div>
 
                 <div class="form-container" style="margin-bottom: 2rem;">
                     <button class="btn-primary" onclick="showCreateGoal()" style="width: 100%; padding: 1rem; font-size: 1.1rem;">
-                        + Cr√©er un nouvel objectif
+                        + Créer un nouvel objectif
                     </button>
                 </div>
 
                 <div id="goals-container">
-                    <!-- Les objectifs seront ajout√©s ici dynamiquement -->
+                    <!-- Les objectifs seront ajoutés ici dynamiquement -->
                 </div>
             </div>
 
-            <!-- Page t√¢ches -->
+            <!-- Page tâches -->
             <div id="todos-page" class="hidden">
                 <div class="page-header">
-                    <button class="btn-back" onclick="showHome()">‚Üê Retour</button>
-                    <h2>üìù Mes T√¢ches</h2>
+                    <button class="btn-back" onclick="showHome()">← Retour</button>
+                    <h2>📝 Mes Tâches</h2>
                 </div>
 
                 <div class="form-container" style="margin-bottom: 2rem;">
                     <button class="btn-primary" onclick="showCreateTodo()" style="width: 100%; padding: 1rem; font-size: 1.1rem; background: #6f42c1; border-color: #6f42c1;">
-                        + Cr√©er une nouvelle t√¢che
+                        + Créer une nouvelle tâche
                     </button>
                 </div>
 
@@ -909,7 +909,7 @@
                         </div>
                         <div class="stat">
                             <span class="stat-number" id="todos-completed">0</span>
-                            <span class="stat-label">Termin√©es</span>
+                            <span class="stat-label">Terminées</span>
                         </div>
                         <div class="stat">
                             <span class="stat-number" id="todos-total">0</span>
@@ -929,26 +929,26 @@
                 </div>
 
                 <div id="todos-container">
-                    <!-- Les t√¢ches seront ajout√©es ici dynamiquement -->
+                    <!-- Les tâches seront ajoutées ici dynamiquement -->
                 </div>
             </div>
 
             <!-- Page historique -->
             <div id="history-page" class="hidden">
                 <div class="page-header">
-                    <button class="btn-back" onclick="showHome()">‚Üê Retour</button>
-                    <h2>üìä Historique</h2>
+                    <button class="btn-back" onclick="showHome()">← Retour</button>
+                    <h2>📊 Historique</h2>
                 </div>
 
                 <div id="history-container">
-                    <!-- L'historique sera ajout√© ici dynamiquement -->
+                    <!-- L'historique sera ajouté ici dynamiquement -->
                 </div>
             </div>
         </main>
     </div>
 
     <script>
-        // Donn√©es
+        // Données
         let goals = JSON.parse(localStorage.getItem('goals') || '[]');
         let todos = JSON.parse(localStorage.getItem('todos') || '[]');
 
@@ -959,7 +959,7 @@
             });
             document.getElementById(pageId).classList.remove('hidden');
             
-            // Mettre √† jour les boutons de navigation
+            // Mettre à jour les boutons de navigation
             document.querySelectorAll('nav button').forEach(btn => {
                 btn.classList.remove('active');
             });
@@ -1035,9 +1035,9 @@
             if (goals.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-icon">üéØ</div>
+                        <div class="empty-icon">🎯</div>
                         <h3>Aucun objectif</h3>
-                        <p>Cr√©ez votre premier objectif pour commencer !</p>
+                        <p>Créez votre premier objectif pour commencer !</p>
                     </div>
                 `;
                 return;
@@ -1056,7 +1056,7 @@
                                     <div class="goal-content">
                                         <div class="goal-header">
                                             <h4>${goal.title}</h4>
-                                            <button class="toggle-btn" onclick="toggleGoal(${goal.id})">‚≠ï</button>
+                                            <button class="toggle-btn" onclick="toggleGoal(${goal.id})">⭕</button>
                                         </div>
                                         <p class="goal-description">${goal.description || ''}</p>
                                         <div class="goal-amount">
@@ -1067,8 +1067,8 @@
                                             <div class="progress-fill" style="width: ${goal.targetAmount ? ((goal.currentAmount || 0) / goal.targetAmount) * 100 : 0}%"></div>
                                         </div>
                                         <div class="goal-actions">
-                                            <button class="btn-archive" onclick="archiveGoal(${goal.id})">üì¶ Archiver</button>
-                                            <button class="btn-delete" onclick="deleteGoal(${goal.id})">‚úï Supprimer</button>
+                                            <button class="btn-archive" onclick="archiveGoal(${goal.id})">📦 Archiver</button>
+                                            <button class="btn-delete" onclick="deleteGoal(${goal.id})">✕ Supprimer</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1078,18 +1078,18 @@
                 `;
             }
 
-            // Afficher les objectifs termin√©s
+            // Afficher les objectifs terminés
             if ((filter === 'all' || filter === 'completed') && completedGoals.length > 0) {
                 html += `
                     <div class="goals-section">
-                        <h3>Objectifs termin√©s (${completedGoals.length})</h3>
+                        <h3>Objectifs terminés (${completedGoals.length})</h3>
                         <div class="goals-grid">
                             ${completedGoals.map(goal => `
                                 <div class="goal-card completed">
                                     <div class="goal-content">
                                         <div class="goal-header">
                                             <h4>${goal.title}</h4>
-                                            <button class="toggle-btn" onclick="toggleGoal(${goal.id})">‚úÖ</button>
+                                            <button class="toggle-btn" onclick="toggleGoal(${goal.id})">✅</button>
                                         </div>
                                         <p class="goal-description">${goal.description || ''}</p>
                                         <div class="goal-amount">
@@ -1100,7 +1100,7 @@
                                             <div class="progress-fill" style="width: ${goal.targetAmount ? ((goal.currentAmount || 0) / goal.targetAmount) * 100 : 0}%"></div>
                                         </div>
                                         <div class="goal-actions">
-                                            <button class="btn-archive" onclick="archiveGoal(${goal.id})">üì¶ Archiver</button>
+                                            <button class="btn-archive" onclick="archiveGoal(${goal.id})">📦 Archiver</button>
                                         </div>
                                     </div>
                                 </div>
@@ -1112,12 +1112,12 @@
 
             // Si aucun objectif ne correspond au filtre
             if (filter !== 'all' && html === '') {
-                const filterText = filter === 'active' ? 'en cours' : 'termin√©s';
+                const filterText = filter === 'active' ? 'en cours' : 'terminés';
                 html = `
                     <div class="empty-state">
-                        <div class="empty-icon">üéØ</div>
+                        <div class="empty-icon">🎯</div>
                         <h3>Aucun objectif ${filterText}</h3>
-                        <p>Cr√©ez des objectifs pour les voir ici !</p>
+                        <p>Créez des objectifs pour les voir ici !</p>
                     </div>
                 `;
             }
@@ -1137,12 +1137,12 @@
             const goal = goals.find(g => g.id === goalId);
             if (!goal) return;
 
-            const confirmMessage = `Archiver l'objectif "${goal.title}" ?\n\nCet objectif sera retir√© de la page d'accueil mais restera visible dans l'historique.`;
+            const confirmMessage = `Archiver l'objectif "${goal.title}" ?\n\nCet objectif sera retiré de la page d'accueil mais restera visible dans l'historique.`;
             
             if (confirm(confirmMessage)) {
                 updateGoal(goalId, { archived: true });
                 renderGoals();
-                alert('Objectif archiv√© ! Il n\'appara√Ætra plus sur la page d\'accueil.');
+                alert('Objectif archivé ! Il n\'apparaîtra plus sur la page d\'accueil.');
             }
         }
 
@@ -1150,16 +1150,16 @@
             const goal = goals.find(g => g.id === goalId);
             if (!goal) return;
 
-            const confirmMessage = `Supprimer l'objectif "${goal.title}" ?\n\nCet objectif sera marqu√© comme supprim√© et appara√Ætra dans l'historique.`;
+            const confirmMessage = `Supprimer l'objectif "${goal.title}" ?\n\nCet objectif sera marqué comme supprimé et apparaîtra dans l'historique.`;
             
             if (confirm(confirmMessage)) {
                 updateGoal(goalId, { deleted: true });
                 renderGoals();
-                alert('Objectif supprim√© ! Il appara√Ætra dans l\'historique comme non termin√©.');
+                alert('Objectif supprimé ! Il apparaîtra dans l\'historique comme non terminé.');
             }
         }
 
-        // Gestion des t√¢ches
+        // Gestion des tâches
         function addTodo(todoData) {
             const newTodo = {
                 ...todoData,
@@ -1197,7 +1197,7 @@
             const total = todos.length;
             const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
 
-            // Mettre √† jour les statistiques
+            // Mettre à jour les statistiques
             document.getElementById('todos-in-progress').textContent = inProgress;
             document.getElementById('todos-completed').textContent = completed;
             document.getElementById('todos-total').textContent = total;
@@ -1213,15 +1213,15 @@
             if (todos.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-icon">üìù</div>
-                        <h3>Aucune t√¢che</h3>
-                        <p>Cr√©ez votre premi√®re t√¢che pour commencer !</p>
+                        <div class="empty-icon">📝</div>
+                        <h3>Aucune tâche</h3>
+                        <p>Créez votre première tâche pour commencer !</p>
                     </div>
                 `;
                 return;
             }
 
-            // Filtrer les t√¢ches selon le param√®tre
+            // Filtrer les tâches selon le paramètre
             let filteredTodos = todos;
             if (filter === 'active') {
                 filteredTodos = todos.filter(t => !t.completed);
@@ -1229,14 +1229,14 @@
                 filteredTodos = todos.filter(t => t.completed);
             }
 
-            // Si aucun r√©sultat apr√®s filtrage
+            // Si aucun résultat après filtrage
             if (filter !== 'all' && filteredTodos.length === 0) {
-                const filterText = filter === 'active' ? 'en cours' : 'termin√©es';
+                const filterText = filter === 'active' ? 'en cours' : 'terminées';
                 container.innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-icon">üìù</div>
-                        <h3>Aucune t√¢che ${filterText}</h3>
-                        <p>Cr√©ez des t√¢ches pour les voir ici !</p>
+                        <div class="empty-icon">📝</div>
+                        <h3>Aucune tâche ${filterText}</h3>
+                        <p>Créez des tâches pour les voir ici !</p>
                     </div>
                 `;
                 return;
@@ -1249,9 +1249,9 @@
                             <h4>${todo.title}</h4>
                             <div class="todo-actions">
                                 <button class="toggle-btn" onclick="toggleTodo(${todo.id})">
-                                    ${todo.completed ? '‚úÖ' : '‚≠ï'}
+                                    ${todo.completed ? '✅' : '⭕'}
                                 </button>
-                                <button class="delete-btn" onclick="deleteTodo(${todo.id})">‚úï</button>
+                                <button class="delete-btn" onclick="deleteTodo(${todo.id})">✕</button>
                             </div>
                         </div>
                         ${todo.description ? `<p class="todo-description">${todo.description}</p>` : ''}
@@ -1290,9 +1290,9 @@
             if (allGoals.length === 0 && allTodos.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
-                        <div class="empty-icon">üìä</div>
+                        <div class="empty-icon">📊</div>
                         <h3>Aucun historique</h3>
-                        <p>Vos objectifs archiv√©s et t√¢ches termin√©es appara√Ætront ici.</p>
+                        <p>Vos objectifs archivés et tâches terminées apparaîtront ici.</p>
                     </div>
                 `;
                 return;
@@ -1303,14 +1303,14 @@
             if (allGoals.length > 0) {
                 html += `
                     <div class="goals-section">
-                        <h3>Objectifs archiv√©s/supprim√©s (${allGoals.length})</h3>
+                        <h3>Objectifs archivés/supprimés (${allGoals.length})</h3>
                         <div class="goals-grid">
                             ${allGoals.map(goal => `
                                 <div class="goal-card ${goal.deleted ? 'deleted' : 'archived'}">
                                     <div class="goal-content">
                                         <div class="goal-header">
                                             <h4>${goal.title}</h4>
-                                            <span class="goal-status">${goal.deleted ? '‚ùå Supprim√©' : 'üì¶ Archiv√©'}</span>
+                                            <span class="goal-status">${goal.deleted ? '❌ Supprimé' : '📦 Archivé'}</span>
                                         </div>
                                         <p class="goal-description">${goal.description || ''}</p>
                                         <div class="goal-amount">
@@ -1321,7 +1321,7 @@
                                             <div class="progress-fill" style="width: ${goal.targetAmount ? ((goal.currentAmount || 0) / goal.targetAmount) * 100 : 0}%"></div>
                                         </div>
                                         <div class="goal-actions">
-                                            ${goal.deleted ? `<button class="btn-restore" onclick="restoreGoal(${goal.id})">üîÑ Restaurer</button>` : ''}
+                                            ${goal.deleted ? `<button class="btn-restore" onclick="restoreGoal(${goal.id})">🔄 Restaurer</button>` : ''}
                                         </div>
                                     </div>
                                 </div>
@@ -1334,14 +1334,14 @@
             if (allTodos.length > 0) {
                 html += `
                     <div class="goals-section">
-                        <h3>T√¢ches termin√©es (${allTodos.length})</h3>
+                        <h3>Tâches terminées (${allTodos.length})</h3>
                         <div class="goals-grid">
                             ${allTodos.map(todo => `
                                 <div class="todo-card completed">
                                     <div class="todo-content">
                                         <div class="todo-header">
                                             <h4>${todo.title}</h4>
-                                            <span class="goal-status">‚úÖ Termin√©</span>
+                                            <span class="goal-status">✅ Terminé</span>
                                         </div>
                                         ${todo.description ? `<p class="todo-description">${todo.description}</p>` : ''}
                                     </div>
@@ -1364,11 +1364,11 @@
             if (confirm(confirmMessage)) {
                 updateGoal(goalId, { deleted: false, archived: false });
                 renderHistory();
-                alert('Objectif restaur√© ! Il appara√Ætra √† nouveau dans vos objectifs actifs.');
+                alert('Objectif restauré ! Il apparaîtra à nouveau dans vos objectifs actifs.');
             }
         }
 
-        // √âv√©nements
+        // Événements
         document.getElementById('goal-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -1394,7 +1394,7 @@
                 targetDate: targetDate ? new Date(targetDate).toISOString() : undefined
             });
 
-            // R√©initialiser le formulaire
+            // Réinitialiser le formulaire
             this.reset();
             showHome();
         });
@@ -1416,7 +1416,7 @@
                 priority: 'medium'
             });
 
-            // R√©initialiser le formulaire
+            // Réinitialiser le formulaire
             this.reset();
             showHome();
         });
@@ -1432,6 +1432,4 @@
     </script>
 </body>
 </html>
-
-
 
