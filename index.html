@@ -891,27 +891,45 @@
             }
             
             .goal-actions {
-                flex-direction: column;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
                 gap: 0.5rem;
                 margin-top: 0.75rem;
             }
             
             .btn-archive, .btn-delete {
                 width: 100%;
-                padding: 0.75rem;
-                font-size: 0.9rem;
+                padding: 0.6rem;
+                font-size: 0.85rem;
+                text-align: center;
+            }
+            
+            .todo-actions {
+                flex-wrap: nowrap;
+                gap: 0.3rem;
+            }
+            
+            .toggle-btn, .delete-btn, .archive-btn {
+                padding: 0.4rem;
+                font-size: 0.8rem;
+                min-width: 40px;
             }
             
             .actions-row {
-                flex-direction: column;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
                 gap: 0.5rem;
                 align-items: stretch;
             }
             
             .btn-quick-create, .btn-quick-active-goals, .btn-quick-todo, .btn-quick-active-todos {
                 width: 100%;
-                padding: 0.75rem;
-                font-size: 0.9rem;
+                padding: 0.6rem;
+                font-size: 0.85rem;
+                text-align: center;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             
             .page-header {
@@ -992,6 +1010,36 @@
             .no-goals, .todos-section {
                 padding: 0.75rem 0.5rem;
                 margin: 0.25rem 0;
+            }
+            
+            .actions-row {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.3rem;
+            }
+            
+            .btn-quick-create, .btn-quick-active-goals, .btn-quick-todo, .btn-quick-active-todos {
+                padding: 0.5rem 0.3rem;
+                font-size: 0.8rem;
+            }
+            
+            .goal-actions {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.3rem;
+            }
+            
+            .btn-archive, .btn-delete {
+                padding: 0.5rem 0.3rem;
+                font-size: 0.8rem;
+            }
+            
+            .todo-actions {
+                gap: 0.2rem;
+            }
+            
+            .toggle-btn, .delete-btn, .archive-btn {
+                padding: 0.3rem;
+                font-size: 0.75rem;
+                min-width: 35px;
             }
             
             .stats-row {
