@@ -531,6 +531,60 @@
             transition: width 0.3s ease;
         }
 
+        .goal-progress {
+            text-align: center;
+            margin: 0.5rem 0;
+        }
+
+        .progress-text {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #4a5568;
+        }
+
+        .add-funds-section {
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f7fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .add-funds-input {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .add-funds-input input {
+            flex: 1;
+            padding: 0.6rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 0.9rem;
+        }
+
+        .add-funds-input input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn-add-funds {
+            background: #48bb78;
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.3s ease;
+        }
+
+        .btn-add-funds:hover {
+            background: #38a169;
+        }
+
         .goal-actions {
             display: flex;
             gap: 0.5rem;
@@ -1111,6 +1165,65 @@
             updateStats();
         }
 
+        function addFunds(goalId) {
+            const amountInput = document.getElementById(`fund-amount-${goalId}`);
+            const amount = parseInt(amountInput.value);
+
+            if (!amount || amount <= 0) {
+                alert('Veuillez entrer un montant valide.');
+                return;
+            }
+
+            const goal = goals.find(g => g.id === goalId);
+            if (!goal) return;
+
+            // Ajouter le montant
+            goal.currentAmount = (goal.currentAmount || 0) + amount;
+            
+            // Ajouter à l'historique
+            goal.fundAdditions = goal.fundAdditions || [];
+            goal.fundAdditions.push({
+                amount: amount,
+                date: new Date().toISOString()
+            });
+
+            // Vérifier si l'objectif est atteint
+            if (goal.currentAmount >= goal.targetAmount) {
+                goal.completed = true;
+                goal.completedAt = new Date().toISOString();
+                
+                // Messages de célébration
+                const celebrationMessages = [
+                    "🎉 Félicitations ! Objectif atteint !",
+                    "🏆 Bravo ! Vous avez réussi !",
+                    "✨ Incroyable ! Mission accomplie !",
+                    "🎊 Excellent travail ! Objectif réalisé !",
+                    "🌟 Fantastique ! Vous l'avez fait !"
+                ];
+                const randomMessage = celebrationMessages[Math.floor(Math.random() * celebrationMessages.length)];
+                alert(randomMessage);
+            }
+
+            // Sauvegarder
+            localStorage.setItem('goals', JSON.stringify(goals));
+            updateStats();
+            renderGoals();
+            
+            // Réinitialiser l'input
+            amountInput.value = '';
+
+            // Message de confirmation
+            const confirmMessages = [
+                "💰 Montant ajouté avec succès !",
+                "✅ Fonds ajoutés ! Continuez comme ça !",
+                "🎯 Excellent ! Vous progressez !",
+                "💪 Bravo ! Chaque pas compte !",
+                "🚀 Super ! Vous avancez bien !"
+            ];
+            const randomConfirm = confirmMessages[Math.floor(Math.random() * confirmMessages.length)];
+            alert(randomConfirm);
+        }
+
         function updateGoal(goalId, updates) {
             const goalIndex = goals.findIndex(g => g.id === goalId);
             if (goalIndex !== -1) {
@@ -1158,6 +1271,15 @@
                                         </div>
                                         <div class="progress-bar">
                                             <div class="progress-fill" style="width: ${goal.targetAmount ? ((goal.currentAmount || 0) / goal.targetAmount) * 100 : 0}%"></div>
+                                        </div>
+                                        <div class="goal-progress">
+                                            <span class="progress-text">${goal.targetAmount ? Math.round(((goal.currentAmount || 0) / goal.targetAmount) * 100) : 0}% atteint</span>
+                                        </div>
+                                        <div class="add-funds-section">
+                                            <div class="add-funds-input">
+                                                <input type="number" id="fund-amount-${goal.id}" placeholder="Montant à ajouter" min="1">
+                                                <button class="btn-add-funds" onclick="addFunds(${goal.id})">💰 Ajouter</button>
+                                            </div>
                                         </div>
                                         <div class="goal-actions">
                                             <button class="btn-archive" onclick="archiveGoal(${goal.id})">📦 Archiver</button>
