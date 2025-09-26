@@ -472,7 +472,7 @@
             gap: 0.5rem;
         }
 
-        .toggle-btn, .delete-btn {
+        .toggle-btn, .delete-btn, .archive-btn {
             background: #f7fafc;
             border: 2px solid #e2e8f0;
             border-radius: 6px;
@@ -491,6 +491,18 @@
             background: #fed7d7;
             border-color: #feb2b2;
             color: #e53e3e;
+        }
+
+        .archive-btn {
+            background: #e6f3ff;
+            border-color: #90cdf4;
+            color: #2b6cb0;
+        }
+
+        .archive-btn:hover {
+            background: #bee3f8;
+            border-color: #63b3ed;
+            color: #2c5282;
         }
 
         .goal-description, .todo-description {
@@ -1303,7 +1315,7 @@
 
         function showGoals(filter = 'all') {
             showPage('goals-page');
-            renderGoals(filter);
+            renderGoals('all'); // Toujours afficher tous les objectifs sur la page objectifs
         }
 
         function showTodos(filter = 'all') {
@@ -1430,7 +1442,7 @@
                                     <div class="goal-content">
                                         <div class="goal-header">
                                             <h4>${goal.title}</h4>
-                                            <button class="toggle-btn" onclick="toggleGoal(${goal.id})">⭕</button>
+                                            <span class="goal-status">En cours</span>
                                         </div>
                                         <p class="goal-description">${goal.description || ''}</p>
                                         <div class="goal-amount">
@@ -1472,7 +1484,7 @@
                                     <div class="goal-content">
                                         <div class="goal-header">
                                             <h4>${goal.title}</h4>
-                                            <button class="toggle-btn" onclick="toggleGoal(${goal.id})">✅</button>
+                                            <span class="goal-status completed">✅ Terminé</span>
                                         </div>
                                         <p class="goal-description">${goal.description || ''}</p>
                                         <div class="goal-amount">
@@ -1548,11 +1560,25 @@
                 ...todoData,
                 id: Date.now(),
                 completed: false,
+                archived: false,
                 createdAt: new Date().toISOString()
             };
             todos.push(newTodo);
             localStorage.setItem('todos', JSON.stringify(todos));
             updateStats();
+        }
+
+        function archiveTodo(todoId) {
+            const todo = todos.find(t => t.id === todoId);
+            if (!todo) return;
+
+            const confirmMessage = `Archiver la tâche "${todo.title}" ?\n\nCette tâche sera déplacée vers l'historique.`;
+            
+            if (confirm(confirmMessage)) {
+                updateTodo(todoId, { archived: true });
+                renderTodos();
+                alert('Tâche archivée ! Elle apparaîtra dans l\'historique.');
+            }
         }
 
         function updateTodo(todoId, updates) {
@@ -1612,12 +1638,12 @@
                 return;
             }
 
-            // Filtrer les tâches selon le paramètre
-            let filteredTodos = todos;
+            // Filtrer les tâches selon le paramètre (exclure les archivées)
+            let filteredTodos = todos.filter(t => !t.archived);
             if (filter === 'active') {
-                filteredTodos = todos.filter(t => !t.completed);
+                filteredTodos = filteredTodos.filter(t => !t.completed);
             } else if (filter === 'completed') {
-                filteredTodos = todos.filter(t => t.completed);
+                filteredTodos = filteredTodos.filter(t => t.completed);
             }
 
             // Si aucun résultat après filtrage
@@ -1639,9 +1665,10 @@
                         <div class="todo-header">
                             <h4>${todo.title}</h4>
                             <div class="todo-actions">
-                                <button class="toggle-btn" onclick="toggleTodo(${todo.id})">
-                                    ${todo.completed ? '✅' : '⭕'}
-                                </button>
+                                ${todo.completed ? 
+                                    `<button class="archive-btn" onclick="archiveTodo(${todo.id})">📦 Archiver</button>` :
+                                    `<button class="toggle-btn" onclick="toggleTodo(${todo.id})">⭕</button>`
+                                }
                                 <button class="delete-btn" onclick="deleteTodo(${todo.id})">✕</button>
                             </div>
                         </div>
@@ -1681,7 +1708,7 @@
         function renderHistory() {
             const container = document.getElementById('history-container');
             const allGoals = goals.filter(g => g.archived || g.deleted);
-            const allTodos = todos.filter(t => t.completed);
+            const allTodos = todos.filter(t => t.archived);
 
             if (allGoals.length === 0 && allTodos.length === 0) {
                 container.innerHTML = `
