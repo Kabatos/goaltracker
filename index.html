@@ -105,10 +105,11 @@
             background: rgba(255, 255, 255, 0.95);
             border-radius: 16px;
             padding: 0.8rem 1rem 1.5rem 1rem;
-            margin-bottom: 1rem;
+            margin: 1rem auto;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
             text-align: center;
+            max-width: 100%;
         }
 
         .no-goals-icon {
@@ -148,23 +149,25 @@
 
         .actions-row {
             display: flex;
-            gap: 0.8rem;
-            margin-bottom: 0.5rem;
+            gap: 0.6rem;
+            margin: 0.8rem auto;
             justify-content: center;
             flex-wrap: wrap;
+            max-width: 90%;
         }
 
         .btn-quick-create, .btn-quick-active-goals {
-            padding: 0.6rem 1rem;
+            padding: 0.6rem 0.8rem;
             border-radius: 18px;
             font-size: 0.8rem;
-            max-width: 140px;
+            max-width: 45%;
             min-width: 100px;
             border: 2px solid #e2e8f0;
             background: #f7fafc;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 500;
+            flex: 1;
         }
 
         .btn-quick-create:hover, .btn-quick-active-goals:hover {
@@ -189,10 +192,11 @@
             background: rgba(255, 255, 255, 0.95);
             border-radius: 16px;
             padding: 1.5rem;
-            margin: 1rem 0;
+            margin: 1rem auto;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
             text-align: center;
+            max-width: 100%;
         }
 
         .todos-header {
@@ -226,16 +230,17 @@
         }
 
         .btn-quick-todo, .btn-quick-active-todos {
-            padding: 0.6rem 1rem;
+            padding: 0.6rem 0.8rem;
             border-radius: 18px;
             font-size: 0.8rem;
-            max-width: 140px;
+            max-width: 45%;
             min-width: 100px;
             border: 2px solid #e2e8f0;
             background: #f7fafc;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 500;
+            flex: 1;
         }
 
         .btn-quick-todo:hover, .btn-quick-active-todos:hover {
@@ -516,6 +521,28 @@
             background: #bee3f8;
             border-color: #63b3ed;
             color: #2c5282;
+        }
+
+        /* Tâches programmées */
+        .scheduled-todos-header {
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .scheduled-todos-header h3 {
+            color: #4a5568;
+            margin-bottom: 0.5rem;
+        }
+
+        .todo-card.scheduled {
+            border-left: 4px solid #f6ad55;
+            background: #fffaf0;
+        }
+
+        .scheduled-date {
+            color: #d69e2e;
+            font-weight: 600;
+            font-size: 0.9rem;
         }
 
         .goal-description, .todo-description {
@@ -1384,6 +1411,50 @@
             renderTodos(filter);
         }
 
+        function showScheduledTodos() {
+            const today = new Date();
+            const todayString = today.toISOString().split('T')[0];
+            
+            const scheduledTodos = todos.filter(todo => {
+                if (!todo.dueDate) return false; // Tâches sans date ne sont pas programmées
+                const todoDate = new Date(todo.dueDate).toISOString().split('T')[0];
+                return todoDate !== todayString && !todo.archived;
+            });
+
+            if (scheduledTodos.length === 0) {
+                alert('Aucune tâche programmée pour les jours suivants.');
+                return;
+            }
+
+            // Créer une page temporaire pour afficher les tâches programmées
+            const container = document.getElementById('todos-container');
+            const originalContent = container.innerHTML;
+            
+            container.innerHTML = `
+                <div class="scheduled-todos-header">
+                    <h3>📅 Tâches programmées</h3>
+                    <button class="btn-back" onclick="renderTodos()">← Retour aux tâches d'aujourd'hui</button>
+                </div>
+                <div class="scheduled-todos-list">
+                    ${scheduledTodos.map(todo => `
+                        <div class="todo-card scheduled">
+                            <div class="todo-content">
+                                <div class="todo-header">
+                                    <h4>${todo.title}</h4>
+                                    <span class="scheduled-date">📅 ${new Date(todo.dueDate).toLocaleDateString('fr-FR')}</span>
+                                </div>
+                                ${todo.description ? `<p class="todo-description">${todo.description}</p>` : ''}
+                                <div class="todo-meta">
+                                    ${todo.priority ? `<span class="todo-priority priority-${todo.priority}">${getPriorityIcon(todo.priority)} ${getPriorityText(todo.priority)}</span>` : ''}
+                                    ${todo.category ? `<span class="todo-category">${getCategoryIcon(todo.category)} ${getCategoryText(todo.category)}</span>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
         function showHistory() {
             showPage('history-page');
             renderHistory();
@@ -1670,9 +1741,19 @@
             const container = document.getElementById('todos-container');
             const statsContainer = document.getElementById('todos-stats');
             
-            const inProgress = todos.filter(t => !t.completed).length;
-            const completed = todos.filter(t => t.completed).length;
-            const total = todos.length;
+            // Filtrer les tâches par date (afficher seulement celles d'aujourd'hui)
+            const today = new Date();
+            const todayString = today.toISOString().split('T')[0];
+            
+            const todayTodos = todos.filter(todo => {
+                if (!todo.dueDate) return true; // Tâches sans date = toujours affichées
+                const todoDate = new Date(todo.dueDate).toISOString().split('T')[0];
+                return todoDate === todayString;
+            });
+            
+            const inProgress = todayTodos.filter(t => !t.completed && !t.archived).length;
+            const completed = todayTodos.filter(t => t.completed && !t.archived).length;
+            const total = todayTodos.filter(t => !t.archived).length;
             const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
 
             // Mettre à jour les statistiques
@@ -1682,25 +1763,26 @@
             document.getElementById('todos-percentage').textContent = percentage + '%';
             document.getElementById('todos-progress-fill').style.width = percentage + '%';
 
+            // Masquer les stats si toutes les tâches sont archivées ou s'il n'y a pas de tâches
             if (total > 0) {
                 statsContainer.classList.remove('hidden');
             } else {
                 statsContainer.classList.add('hidden');
             }
 
-            if (todos.length === 0) {
+            if (todayTodos.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-icon">📝</div>
-                        <h3>Aucune tâche</h3>
-                        <p>Créez votre première tâche pour commencer !</p>
+                        <h3>Aucune tâche pour aujourd'hui</h3>
+                        <p>Créez des tâches pour aujourd'hui ou programmez-en pour demain !</p>
                     </div>
                 `;
                 return;
             }
 
-            // Filtrer les tâches selon le paramètre (exclure les archivées)
-            let filteredTodos = todos.filter(t => !t.archived);
+            // Filtrer les tâches selon le paramètre (exclure les archivées et utiliser seulement celles d'aujourd'hui)
+            let filteredTodos = todayTodos.filter(t => !t.archived);
             if (filter === 'active') {
                 filteredTodos = filteredTodos.filter(t => !t.completed);
             } else if (filter === 'completed') {
@@ -1759,8 +1841,19 @@
         function updateStats() {
             const activeGoals = goals.filter(g => !g.completed && !g.archived && !g.deleted);
             const completedGoals = goals.filter(g => g.completed && !g.archived && !g.deleted);
-            const activeTodos = todos.filter(t => !t.completed);
-            const completedTodos = todos.filter(t => t.completed);
+            
+            // Filtrer les tâches d'aujourd'hui
+            const today = new Date();
+            const todayString = today.toISOString().split('T')[0];
+            
+            const todayTodos = todos.filter(todo => {
+                if (!todo.dueDate) return true; // Tâches sans date = toujours comptées
+                const todoDate = new Date(todo.dueDate).toISOString().split('T')[0];
+                return todoDate === todayString;
+            });
+            
+            const activeTodos = todayTodos.filter(t => !t.completed && !t.archived);
+            const completedTodos = todayTodos.filter(t => t.completed && !t.archived);
 
             document.getElementById('active-goals-count').textContent = activeGoals.length;
             document.getElementById('completed-goals-count').textContent = completedGoals.length;
