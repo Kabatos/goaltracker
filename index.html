@@ -470,6 +470,8 @@
         .todo-actions {
             display: flex;
             gap: 0.5rem;
+            flex-wrap: wrap;
+            align-items: center;
         }
 
         .toggle-btn, .delete-btn, .archive-btn {
@@ -485,6 +487,17 @@
         .toggle-btn:hover {
             background: #edf2f7;
             border-color: #cbd5e0;
+        }
+
+        .toggle-btn.completed {
+            background: #c6f6d5;
+            border-color: #9ae6b4;
+            color: #22543d;
+        }
+
+        .toggle-btn.completed:hover {
+            background: #9ae6b4;
+            border-color: #68d391;
         }
 
         .delete-btn:hover {
@@ -1665,9 +1678,12 @@
                         <div class="todo-header">
                             <h4>${todo.title}</h4>
                             <div class="todo-actions">
+                                <button class="toggle-btn ${todo.completed ? 'completed' : ''}" onclick="toggleTodo(${todo.id})">
+                                    ${todo.completed ? '✅' : '⭕'}
+                                </button>
                                 ${todo.completed ? 
-                                    `<button class="archive-btn" onclick="archiveTodo(${todo.id})">📦 Archiver</button>` :
-                                    `<button class="toggle-btn" onclick="toggleTodo(${todo.id})">⭕</button>`
+                                    `<button class="archive-btn" onclick="archiveTodo(${todo.id})">📦 Archiver</button>` : 
+                                    ''
                                 }
                                 <button class="delete-btn" onclick="deleteTodo(${todo.id})">✕</button>
                             </div>
