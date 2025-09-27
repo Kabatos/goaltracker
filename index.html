@@ -163,20 +163,21 @@
             justify-content: center;
             flex-wrap: wrap;
             max-width: 90%;
+            align-items: center;
         }
 
         .btn-quick-create, .btn-quick-active-goals {
             padding: 0.6rem 0.8rem;
             border-radius: 18px;
             font-size: 0.8rem;
-            max-width: 45%;
+            width: 48%;
             min-width: 100px;
             border: 2px solid #e2e8f0;
             background: #f7fafc;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 500;
-            flex: 1;
+            text-align: center;
         }
 
         .btn-quick-create:hover, .btn-quick-active-goals:hover {
@@ -247,14 +248,14 @@
             padding: 0.6rem 0.8rem;
             border-radius: 18px;
             font-size: 0.8rem;
-            max-width: 45%;
+            width: 48%;
             min-width: 100px;
             border: 2px solid #e2e8f0;
             background: #f7fafc;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 500;
-            flex: 1;
+            text-align: center;
         }
 
         .btn-quick-todo:hover, .btn-quick-active-todos:hover {
@@ -790,9 +791,10 @@
         .stat-number {
             font-size: 2rem;
             font-weight: 700;
-            color: #2d3748;
+            color: #ffffff;
             display: block;
             margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .stat-label {
@@ -814,12 +816,13 @@
 
         .progress-label {
             font-weight: 600;
-            color: #2d3748;
+            color: #b0b0b0;
         }
 
         .progress-percentage {
             font-weight: 700;
-            color: #667eea;
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         /* Empty state */
@@ -967,13 +970,20 @@
             }
             
             .btn-quick-create, .btn-quick-active-goals, .btn-quick-todo, .btn-quick-active-todos {
-                width: 100%;
-                padding: 0.6rem;
-                font-size: 0.85rem;
+                width: 48%;
+                padding: 0.6rem 0.4rem;
+                font-size: 0.8rem;
                 text-align: center;
                 white-space: nowrap;
                 overflow: hidden;
                 text-overflow: ellipsis;
+            }
+            
+            .actions-row {
+                justify-content: center;
+                align-items: center;
+                gap: 0.4rem;
+                margin: 0.6rem auto;
             }
             
             .page-header {
@@ -1062,8 +1072,10 @@
             }
             
             .btn-quick-create, .btn-quick-active-goals, .btn-quick-todo, .btn-quick-active-todos {
+                width: 48%;
                 padding: 0.5rem 0.3rem;
                 font-size: 0.8rem;
+                text-align: center;
             }
             
             .goal-actions {
