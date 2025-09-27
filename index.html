@@ -151,17 +151,6 @@
             box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
         }
 
-        /* Sections de boutons */
-        .goals-actions-section, .todos-actions-section {
-            background: rgba(45, 45, 45, 0.95);
-            border-radius: 16px;
-            padding: 1rem;
-            margin: 0.5rem auto;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-        }
 
         .quick-actions {
             margin: 0.8rem 0;
@@ -174,7 +163,7 @@
             margin: 0.8rem auto;
             justify-content: center;
             flex-wrap: wrap;
-            max-width: 90%;
+            max-width: 100%;
             align-items: center;
         }
 
@@ -182,8 +171,9 @@
             padding: 0.6rem 0.8rem;
             border-radius: 18px;
             font-size: 0.8rem;
-            width: 48%;
-            min-width: 100px;
+            flex: 1;
+            min-width: 120px;
+            max-width: 48%;
             border: 2px solid #e2e8f0;
             background: #f7fafc;
             cursor: pointer;
@@ -260,8 +250,9 @@
             padding: 0.6rem 0.8rem;
             border-radius: 18px;
             font-size: 0.8rem;
-            width: 48%;
-            min-width: 100px;
+            flex: 1;
+            min-width: 120px;
+            max-width: 48%;
             border: 2px solid #e2e8f0;
             background: #f7fafc;
             cursor: pointer;
@@ -873,11 +864,6 @@
                 border-radius: 12px;
             }
             
-            .goals-actions-section, .todos-actions-section {
-                margin: 0.3rem 0;
-                padding: 0.8rem;
-                border-radius: 12px;
-            }
             
             .no-goals h2, .todos-section h3 {
                 font-size: 1.2rem;
@@ -1171,13 +1157,12 @@
                     <h2>Gérez vos objectifs</h2>
                     <p class="motivation-text">"Visualisez vos rêves, atteignez vos objectifs !"</p>
                     <p>Créez et suivez vos objectifs financiers</p>
-                </div>
-
-                <!-- Boutons Objectifs -->
-                <div class="goals-actions-section">
-                    <div class="actions-row">
-                        <button class="btn-quick-create" onclick="showCreateGoal()">+ Objectif</button>
-                        <button class="btn-quick-active-goals" onclick="showGoals()">🎯 Objectifs en cours</button>
+                    
+                    <div class="quick-actions">
+                        <div class="actions-row">
+                            <button class="btn-quick-create" onclick="showCreateGoal()">+ Objectif</button>
+                            <button class="btn-quick-active-goals" onclick="showGoals()">🎯 Objectifs en cours</button>
+                        </div>
                     </div>
                 </div>
 
@@ -1189,13 +1174,12 @@
                         <p class="motivation-text">"Planifiez aujourd'hui, réussissez demain !"</p>
                         <p>Organiser votre routine</p>
                     </div>
-                </div>
-
-                <!-- Boutons Tâches -->
-                <div class="todos-actions-section">
-                    <div class="actions-row">
-                        <button class="btn-quick-todo" onclick="showCreateTodo()">📝 Tâche</button>
-                        <button class="btn-quick-active-todos" onclick="showTodos()">📋 Tâches en cours</button>
+                    
+                    <div class="todos-actions">
+                        <div class="actions-row">
+                            <button class="btn-quick-todo" onclick="showCreateTodo()">📝 Tâche</button>
+                            <button class="btn-quick-active-todos" onclick="showTodos()">📋 Tâches en cours</button>
+                        </div>
                     </div>
                 </div>
 
