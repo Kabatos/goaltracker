@@ -1071,7 +1071,17 @@
                 document.getElementById('goals-btn').classList.add('active');
             } else if (pageId === 'todos-page') {
                 document.getElementById('todos-btn').classList.add('active');
+            } else if (pageId === 'history-page') {
+                document.getElementById('history-btn').classList.add('active');
             }
+            
+            // Sauvegarder la page actuelle dans l'URL
+            const currentUrl = new URL(window.location);
+            currentUrl.hash = pageId;
+            window.history.replaceState(null, '', currentUrl);
+            
+            // Sauvegarder aussi dans localStorage
+            localStorage.setItem('currentPage', pageId);
         }
 
         function showHome() {
@@ -1314,6 +1324,11 @@
             const total = activeTodos.length;
             const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
 
+            // Debug: Afficher les statistiques
+            console.log('Toutes les tâches:', todos);
+            console.log('Tâches actives:', activeTodos);
+            console.log('En cours:', inProgress, 'Terminées:', completed, 'Total:', total);
+
             // Mettre à jour les statistiques
             document.getElementById('todos-in-progress').textContent = inProgress;
             document.getElementById('todos-completed').textContent = completed;
@@ -1457,7 +1472,16 @@
             const todo = todos.find(t => t.id === todoId);
             if (todo) {
                 const wasCompleted = todo.completed;
-                updateTodo(todoId, { completed: !todo.completed });
+                const newCompleted = !todo.completed;
+                
+                // Debug: Afficher l'état avant et après
+                console.log('Avant toggle:', todo);
+                
+                updateTodo(todoId, { completed: newCompleted });
+                
+                // Debug: Vérifier que la mise à jour a fonctionné
+                const updatedTodo = todos.find(t => t.id === todoId);
+                console.log('Après toggle:', updatedTodo);
                 
                 // Pas d'incrémentation automatique ici
                 // L'incrémentation se fait seulement lors de la reprogrammation
@@ -1475,10 +1499,17 @@
             const activeTodos = todos.filter(t => !t.completed && !t.archived);
             const completedTodos = todos.filter(t => t.completed && !t.archived);
 
+            // Mettre à jour les statistiques de la page d'accueil
             document.getElementById('active-goals-count').textContent = activeGoals.length;
             document.getElementById('completed-goals-count').textContent = completedGoals.length;
             document.getElementById('active-todos-count').textContent = activeTodos.length;
             document.getElementById('completed-todos-count').textContent = completedTodos.length;
+            
+            // Mettre à jour les statistiques de la page des tâches si elle est visible
+            const todosPage = document.getElementById('todos-page');
+            if (todosPage && !todosPage.classList.contains('hidden')) {
+                renderTodos();
+            }
         }
 
         // Événements
@@ -1726,6 +1757,34 @@
         setInterval(checkAndAutoReschedule, 60 * 60 * 1000); // 1 heure
 
         // Initialisation
+        // Fonction pour restaurer la page au chargement
+        function restoreCurrentPage() {
+            // Vérifier d'abord l'URL hash
+            const hash = window.location.hash.replace('#', '');
+            if (hash && document.getElementById(hash)) {
+                showPage(hash);
+                return;
+            }
+            
+            // Sinon, vérifier le localStorage
+            const savedPage = localStorage.getItem('currentPage');
+            if (savedPage && document.getElementById(savedPage)) {
+                showPage(savedPage);
+                return;
+            }
+            
+            // Par défaut, afficher la page d'accueil
+            showPage('home-page');
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStats();
+            renderGoals();
+            renderTodos();
+            restoreCurrentPage();
+        });
+
         updateStats();
     </script>
 
