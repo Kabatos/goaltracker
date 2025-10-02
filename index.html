@@ -4,21 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🎯 GoalTracker</title>
-    
-    <!-- PWA Meta Tags -->
-    <meta name="description" content="Application de gestion d'objectifs et de tâches personnelles">
-    <meta name="theme-color" content="#667eea">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="GoalTracker">
-    
-    <!-- Manifest -->
-    <link rel="manifest" href="manifest.json">
-    
-    <!-- Icons -->
-    <link rel="icon" type="image/png" sizes="32x32" href="icon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="icon-16.png">
-    <link rel="apple-touch-icon" href="icon-192.png">
     <style>
         /* Reset et base */
         * {
@@ -29,9 +14,9 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #ffffff;
+            color: #333;
         }
 
         .app {
@@ -43,22 +28,20 @@
 
         /* Header */
         .app-header {
-            background: rgba(45, 45, 45, 0.95);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             padding: 1rem 1rem 0.8rem;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-            border-radius: 20px;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
             margin-bottom: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .app-header h1 {
             text-align: center;
             font-size: 1.8rem;
             font-weight: 700;
-            color: #ffffff;
+            color: #2d3748;
             margin-bottom: 1rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .app-header nav {
@@ -68,21 +51,18 @@
         }
 
         .app-header button {
-            background: rgba(60, 60, 60, 0.8);
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
             border-radius: 12px;
             padding: 0.8rem 1.2rem;
             font-size: 1.2rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            color: #ffffff;
-            backdrop-filter: blur(10px);
         }
 
         .app-header button:hover {
-            background: rgba(80, 80, 80, 0.9);
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            background: #edf2f7;
+            border-color: #cbd5e0;
         }
 
         .app-header button.active {
@@ -107,15 +87,13 @@
 
         /* Section Objectifs */
         .no-goals {
-            background: rgba(45, 45, 45, 0.95);
-            border-radius: 20px;
-            padding: 0.6rem 0.8rem 1rem 0.8rem;
-            margin: 0.8rem auto;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 0.8rem 1rem 1.5rem 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
             text-align: center;
-            max-width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .no-goals-icon {
@@ -124,60 +102,54 @@
         }
 
         .no-goals h2 {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            color: #2d3748;
+            margin-bottom: 0.8rem;
         }
 
         .no-goals p {
-            font-size: 0.85rem;
-            margin-bottom: 0.8rem;
-            color: #b0b0b0;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            color: #718096;
         }
 
         .motivation-text {
             font-style: italic;
-            color: #00ff88;
-            font-size: 0.75rem;
-            margin-bottom: 0.5rem;
-            padding: 0.4rem 0.6rem;
-            background: rgba(0, 255, 136, 0.1);
+            color: #4a5568;
+            font-size: 0.85rem;
+            margin-bottom: 0.8rem;
+            padding: 0.5rem;
+            background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
             border-radius: 8px;
-            border-left: 3px solid #00ff88;
+            border-left: 3px solid #667eea;
             font-weight: 500;
-            line-height: 1.2;
-            box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
         }
 
-
         .quick-actions {
-            margin: 0.8rem 0;
-            gap: 0.6rem;
+            margin: 1rem 0;
+            gap: 0.8rem;
         }
 
         .actions-row {
             display: flex;
-            gap: 0.6rem;
-            margin: 0.8rem auto;
+            gap: 0.8rem;
+            margin-bottom: 0.5rem;
             justify-content: center;
-            align-items: center;
-            width: 100%;
+            flex-wrap: wrap;
         }
 
         .btn-quick-create, .btn-quick-active-goals {
-            padding: 0.6rem 0.8rem;
+            padding: 0.6rem 1rem;
             border-radius: 18px;
             font-size: 0.8rem;
-            width: 45%;
-            min-width: 120px;
+            max-width: 140px;
+            min-width: 100px;
             border: 2px solid #e2e8f0;
             background: #f7fafc;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 500;
-            text-align: center;
         }
 
         .btn-quick-create:hover, .btn-quick-active-goals:hover {
@@ -199,15 +171,13 @@
 
         /* Section Tâches */
         .todos-section {
-            background: rgba(45, 45, 45, 0.95);
-            border-radius: 20px;
-            padding: 0.8rem 1rem 1rem 1rem;
-            margin: 0.8rem auto;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
             text-align: center;
-            max-width: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .todos-header {
@@ -220,42 +190,37 @@
         }
 
         .todos-section h3 {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 700;
-            color: #ffffff;
-            margin-bottom: 0.5rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            color: #2d3748;
+            margin-bottom: 0.8rem;
         }
 
         .todos-section p {
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             margin: 0;
-            color: #b0b0b0;
+            color: #718096;
         }
 
         .todos-section .motivation-text {
-            border-left: 3px solid #00ff88;
-            color: #00ff88;
-            background: rgba(0, 255, 136, 0.1);
-            box-shadow: 0 0 10px rgba(0, 255, 136, 0.2);
+            border-left: 3px solid #6f42c1;
         }
 
         .todos-actions {
-            margin-top: 0.8rem;
+            margin-top: 1rem;
         }
 
         .btn-quick-todo, .btn-quick-active-todos {
-            padding: 0.6rem 0.8rem;
+            padding: 0.6rem 1rem;
             border-radius: 18px;
             font-size: 0.8rem;
-            width: 45%;
-            min-width: 120px;
+            max-width: 140px;
+            min-width: 100px;
             border: 2px solid #e2e8f0;
             background: #f7fafc;
             cursor: pointer;
             transition: all 0.3s ease;
             font-weight: 500;
-            text-align: center;
         }
 
         .btn-quick-todo:hover, .btn-quick-active-todos:hover {
@@ -275,40 +240,23 @@
             border-color: #5a2d91;
         }
 
-        /* Stats grid - 2 par ligne */
+        /* Stats grid */
         .stats-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 0.8rem;
             margin-bottom: 1rem;
         }
 
-        .stats-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 0.8rem;
-            margin-bottom: 0.8rem;
-        }
-
         .stat-card {
-            background: rgba(45, 45, 45, 0.95);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 16px;
             padding: 1rem;
             display: flex;
             align-items: center;
             gap: 0.8rem;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             backdrop-filter: blur(10px);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
-            background: rgba(60, 60, 60, 0.95);
-            border-color: rgba(255, 255, 255, 0.2);
         }
 
         .stat-icon {
@@ -322,14 +270,13 @@
         .stat-number {
             font-size: 2rem;
             font-weight: 700;
-            color: #ffffff;
+            color: #2d3748;
             display: block;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .stat-label {
             font-size: 0.9rem;
-            color: #b0b0b0;
+            color: #718096;
             font-weight: 500;
         }
 
@@ -356,24 +303,17 @@
         }
 
         .form-group input,
-        .form-group textarea,
-        .form-group select {
+        .form-group textarea {
             width: 100%;
             padding: 0.8rem;
             border: 2px solid #e2e8f0;
             border-radius: 8px;
             font-size: 1rem;
             transition: border-color 0.3s ease;
-            background: white;
-        }
-
-        .form-group select {
-            cursor: pointer;
         }
 
         .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
+        .form-group textarea:focus {
             outline: none;
             border-color: #667eea;
         }
@@ -493,11 +433,9 @@
         .todo-actions {
             display: flex;
             gap: 0.5rem;
-            flex-wrap: wrap;
-            align-items: center;
         }
 
-        .toggle-btn, .delete-btn, .archive-btn {
+        .toggle-btn, .delete-btn {
             background: #f7fafc;
             border: 2px solid #e2e8f0;
             border-radius: 6px;
@@ -512,55 +450,10 @@
             border-color: #cbd5e0;
         }
 
-        .toggle-btn.completed {
-            background: #c6f6d5;
-            border-color: #9ae6b4;
-            color: #22543d;
-        }
-
-        .toggle-btn.completed:hover {
-            background: #9ae6b4;
-            border-color: #68d391;
-        }
-
         .delete-btn:hover {
             background: #fed7d7;
             border-color: #feb2b2;
             color: #e53e3e;
-        }
-
-        .archive-btn {
-            background: #e6f3ff;
-            border-color: #90cdf4;
-            color: #2b6cb0;
-        }
-
-        .archive-btn:hover {
-            background: #bee3f8;
-            border-color: #63b3ed;
-            color: #2c5282;
-        }
-
-        /* Tâches programmées */
-        .scheduled-todos-header {
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-
-        .scheduled-todos-header h3 {
-            color: #4a5568;
-            margin-bottom: 0.5rem;
-        }
-
-        .todo-card.scheduled {
-            border-left: 4px solid #f6ad55;
-            background: #fffaf0;
-        }
-
-        .scheduled-date {
-            color: #d69e2e;
-            font-weight: 600;
-            font-size: 0.9rem;
         }
 
         .goal-description, .todo-description {
@@ -601,60 +494,6 @@
             transition: width 0.3s ease;
         }
 
-        .goal-progress {
-            text-align: center;
-            margin: 0.5rem 0;
-        }
-
-        .progress-text {
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #4a5568;
-        }
-
-        .add-funds-section {
-            margin: 1rem 0;
-            padding: 1rem;
-            background: #f7fafc;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-        }
-
-        .add-funds-input {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-        }
-
-        .add-funds-input input {
-            flex: 1;
-            padding: 0.6rem;
-            border: 2px solid #e2e8f0;
-            border-radius: 6px;
-            font-size: 0.9rem;
-        }
-
-        .add-funds-input input:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .btn-add-funds {
-            background: #48bb78;
-            color: white;
-            border: none;
-            padding: 0.6rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.9rem;
-            transition: background 0.3s ease;
-        }
-
-        .btn-add-funds:hover {
-            background: #38a169;
-        }
-
         .goal-actions {
             display: flex;
             gap: 0.5rem;
@@ -692,78 +531,6 @@
             border-color: #fc8181;
         }
 
-        .btn-restore {
-            background: #c6f6d5;
-            color: #2f855a;
-            border-color: #9ae6b4;
-        }
-
-        .btn-restore:hover {
-            background: #9ae6b4;
-            border-color: #68d391;
-        }
-
-        .goal-card.deleted {
-            opacity: 0.7;
-            background: rgba(254, 215, 215, 0.95);
-        }
-
-        .goal-card.archived {
-            opacity: 0.7;
-            background: rgba(254, 243, 199, 0.95);
-        }
-
-        .goal-status {
-            font-size: 0.8rem;
-            font-weight: 600;
-            padding: 0.3rem 0.6rem;
-            border-radius: 12px;
-            background: #f7fafc;
-            color: #4a5568;
-        }
-
-        /* Todo metadata */
-        .todo-meta {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-top: 0.8rem;
-            font-size: 0.8rem;
-        }
-
-        .todo-priority, .todo-category, .todo-due-date {
-            padding: 0.3rem 0.6rem;
-            border-radius: 12px;
-            font-weight: 500;
-            background: #f7fafc;
-            color: #4a5568;
-        }
-
-        .todo-priority.priority-low {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .todo-priority.priority-medium {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        .todo-priority.priority-high {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .todo-category {
-            background: #e2e8f0;
-            color: #4a5568;
-        }
-
-        .todo-due-date {
-            background: #e6f3ff;
-            color: #0066cc;
-        }
-
         /* Todo stats */
         .todo-stats-header {
             background: rgba(255, 255, 255, 0.95);
@@ -791,15 +558,14 @@
         .stat-number {
             font-size: 2rem;
             font-weight: 700;
-            color: #ffffff;
+            color: #2d3748;
             display: block;
             margin-bottom: 0.5rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
         }
 
         .stat-label {
             font-size: 0.9rem;
-            color: #b0b0b0;
+            color: #718096;
             font-weight: 500;
         }
 
@@ -816,13 +582,12 @@
 
         .progress-label {
             font-weight: 600;
-            color: #b0b0b0;
+            color: #2d3748;
         }
 
         .progress-percentage {
             font-weight: 700;
-            color: #ffffff;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            color: #667eea;
         }
 
         /* Empty state */
@@ -843,297 +608,177 @@
             color: white;
         }
 
-        /* Responsive - Mobile First */
+        /* Responsive */
         @media (max-width: 768px) {
             .app {
-                padding: 0.1rem;
-                min-height: 100vh;
+                padding: 0.25rem;
             }
             
             .app-main {
-                padding: 0.25rem 0.1rem;
-                margin: 0;
-            }
-            
-            .no-goals, .todos-section {
-                margin: 0.5rem 0;
-                padding: 1rem 0.75rem;
-                border-radius: 12px;
-            }
-            
-            
-            .no-goals h2, .todos-section h3 {
-                font-size: 1.2rem;
-                margin-bottom: 0.5rem;
-            }
-            
-            .motivation-text {
-                font-size: 0.85rem;
-                line-height: 1.4;
-                margin-bottom: 0.75rem;
-            }
-            
-            .stats-container {
-                margin: 0.5rem 0;
+                padding: 0.5rem 0.25rem;
             }
             
             .stats-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 0.4rem;
-            }
-            
-            .stats-row {
-                grid-template-columns: 1fr 1fr;
-                gap: 0.4rem;
+                grid-template-columns: 1fr;
             }
             
             .goals-grid {
                 grid-template-columns: 1fr;
-                gap: 0.75rem;
-            }
-            
-            .goal-card {
-                margin: 0;
-                padding: 0.75rem;
-            }
-            
-            .goal-content {
-                padding: 0;
-            }
-            
-            .goal-header h4 {
-                font-size: 1rem;
-                line-height: 1.3;
-            }
-            
-            .goal-description {
-                font-size: 0.85rem;
-                margin: 0.5rem 0;
-            }
-            
-            .goal-amount {
-                font-size: 0.9rem;
-                margin: 0.5rem 0;
-            }
-            
-            .add-funds-section {
-                margin: 0.75rem 0;
-                padding: 0.75rem;
-            }
-            
-            .add-funds-input {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            
-            .add-funds-input input {
-                width: 100%;
-                font-size: 1rem;
-                padding: 0.75rem;
-            }
-            
-            .btn-add-funds {
-                width: 100%;
-                padding: 0.75rem;
-                font-size: 1rem;
-            }
-            
-            .goal-actions {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 0.5rem;
-                margin-top: 0.75rem;
-            }
-            
-            .btn-archive, .btn-delete {
-                width: 100%;
-                padding: 0.6rem;
-                font-size: 0.85rem;
-                text-align: center;
-            }
-            
-            .todo-actions {
-                flex-wrap: nowrap;
-                gap: 0.3rem;
-            }
-            
-            .toggle-btn, .delete-btn, .archive-btn {
-                padding: 0.4rem;
-                font-size: 0.8rem;
-                min-width: 40px;
             }
             
             .actions-row {
-                display: flex;
-                justify-content: center;
+                flex-direction: column;
                 align-items: center;
-                gap: 0.5rem;
-                width: 100%;
             }
             
             .btn-quick-create, .btn-quick-active-goals, .btn-quick-todo, .btn-quick-active-todos {
-                width: 45%;
-                padding: 0.6rem 0.4rem;
-                font-size: 0.8rem;
-                text-align: center;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-            
-            .actions-row {
-                justify-content: center;
-                align-items: center;
-                gap: 0.4rem;
-                margin: 0.6rem auto;
-            }
-            
-            .page-header {
-                padding: 0.75rem 0.5rem;
-                margin: 0;
+                width: 100%;
+                max-width: 200px;
             }
             
             .page-header h2 {
-                font-size: 1.3rem;
-            }
-            
-            .form-container {
-                padding: 1rem 0.75rem;
-                margin: 0.5rem 0;
-            }
-            
-            .form-group input, .form-group textarea, .form-group select {
-                padding: 0.75rem;
-                font-size: 1rem;
-            }
-            
-            .form-actions {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            
-            .form-actions button {
-                width: 100%;
-                padding: 0.75rem;
-                font-size: 1rem;
-            }
-
-            .stat-card {
-                padding: 0.6rem;
-            }
-
-            .stat-icon {
                 font-size: 1.5rem;
             }
-
-            .stat-number {
-                font-size: 1.2rem;
-            }
-
-            .stat-label {
-                font-size: 0.75rem;
-            }
-            
-            .app-header {
-                padding: 0.75rem 0.5rem;
-                margin: 0 0 0.5rem 0;
-            }
-            
-            .app-header h1 {
-                font-size: 1.3rem;
-            }
-            
-            .nav-buttons {
-                gap: 0.5rem;
-            }
-            
-            .nav-buttons button {
-                padding: 0.5rem;
-                font-size: 1.2rem;
-            }
-        }
-
-        /* Très petits écrans */
-        @media (max-width: 480px) {
-            .app {
-                padding: 0.05rem;
-            }
-            
-            .app-main {
-                padding: 0.1rem 0.05rem;
-            }
-            
-            .no-goals, .todos-section {
-                padding: 0.75rem 0.5rem;
-                margin: 0.25rem 0;
-            }
-            
-            .actions-row {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 0.3rem;
-                width: 100%;
-            }
-            
-            .btn-quick-create, .btn-quick-active-goals, .btn-quick-todo, .btn-quick-active-todos {
-                width: 45%;
-                padding: 0.5rem 0.3rem;
-                font-size: 0.8rem;
-                text-align: center;
-            }
-            
-            .goal-actions {
-                grid-template-columns: 1fr 1fr;
-                gap: 0.3rem;
-            }
-            
-            .btn-archive, .btn-delete {
-                padding: 0.5rem 0.3rem;
-                font-size: 0.8rem;
-            }
-            
-            .todo-actions {
-                gap: 0.2rem;
-            }
-            
-            .toggle-btn, .delete-btn, .archive-btn {
-                padding: 0.3rem;
-                font-size: 0.75rem;
-                min-width: 35px;
-            }
-            
-            .stats-row {
-                gap: 0.3rem;
-            }
-            
-            .stat-card {
-                padding: 0.5rem;
-            }
-            
-            .goal-card {
-                padding: 0.5rem;
-            }
-            
-            .add-funds-section {
-                padding: 0.5rem;
-            }
             
             .form-container {
-                padding: 0.75rem 0.5rem;
-            }
-            
-            .page-header {
-                padding: 0.5rem 0.25rem;
-            }
-            
-            .app-header {
-                padding: 0.5rem 0.25rem;
+                padding: 1.5rem;
             }
         }
 
         .hidden {
             display: none;
+        }
+
+        /* Menu de reprogrammation */
+        .reschedule-menu {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(45, 45, 45, 0.98);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+            min-width: 300px;
+            text-align: center;
+        }
+
+        .reschedule-menu h3 {
+            color: #ffffff;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .reschedule-options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .reschedule-option {
+            background: rgba(60, 60, 60, 0.8);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .reschedule-option:hover {
+            background: rgba(80, 80, 80, 0.9);
+            border-color: #00ff88;
+            box-shadow: 0 4px 15px rgba(0, 255, 136, 0.2);
+        }
+
+        .reschedule-option.selected {
+            background: rgba(0, 255, 136, 0.2);
+            border-color: #00ff88;
+            color: #00ff88;
+        }
+
+        .reschedule-actions {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+        }
+
+        .reschedule-btn, .cancel-reschedule-btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .reschedule-btn {
+            background: #00ff88;
+            color: #000000;
+        }
+
+        .reschedule-btn:hover {
+            background: #00cc6a;
+        }
+
+        .cancel-reschedule-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+        }
+
+        .cancel-reschedule-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .custom-date-input {
+            margin-top: 0.8rem;
+            padding: 0.6rem;
+            border-radius: 8px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(60, 60, 60, 0.8);
+            color: #ffffff;
+            width: 100%;
+        }
+
+        .custom-date-input:focus {
+            outline: none;
+            border-color: #00ff88;
+        }
+
+        .todo-execution-count {
+            background: #00ff88;
+            color: #000000;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-left: 0.3rem;
+        }
+
+        .reschedule-btn-todo {
+            background: #6f42c1;
+            color: white;
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-left: 0.3rem;
+        }
+
+        .reschedule-btn-todo:hover {
+            background: #5a2d91;
         }
     </style>
 </head>
@@ -1145,7 +790,7 @@
                 <button id="home-btn" class="active">🏠</button>
                 <button id="goals-btn">🎯</button>
                 <button id="todos-btn">📝</button>
-                <button id="history-btn">🕐</button>
+                <button id="history-btn">📚</button>
             </nav>
         </header>
 
@@ -1156,7 +801,7 @@
                 <div class="no-goals">
                     <div class="no-goals-icon">🎯</div>
                     <h2>Gérez vos objectifs</h2>
-                    <p class="motivation-text">"Visualisez vos rêves, atteignez vos objectifs !"</p>
+                    <p class="motivation-text">"Si vous ne visualisez pas vos rêves, vous n'obtiendrez rien de concret. Chaque objectif clair est un pas vers votre réussite !"</p>
                     <p>Créez et suivez vos objectifs financiers</p>
                     
                     <div class="quick-actions">
@@ -1172,7 +817,7 @@
                     <div class="todos-header">
                         <div class="todos-icon">📝</div>
                         <h3>Planifier des tâches</h3>
-                        <p class="motivation-text">"Planifiez aujourd'hui, réussissez demain !"</p>
+                        <p class="motivation-text">"Si vous ne planifiez rien, vous gaspillez votre temps précieux. Chaque minute organisée est un investissement dans votre avenir !"</p>
                         <p>Organiser votre routine</p>
                     </div>
                     
@@ -1184,43 +829,29 @@
                     </div>
                 </div>
 
-                <!-- Statistiques - 2 par ligne -->
-                <div class="stats-container">
-                    <!-- Ligne 1: Objectifs -->
-                    <div class="stats-row">
-                        <div class="stat-card" onclick="showGoals('active')">
-                            <div class="stat-icon">🎯</div>
-                            <div class="stat-content">
-                                <div class="stat-number" id="active-goals-count">0</div>
-                                <div class="stat-label">Objectifs actifs</div>
-                            </div>
-                        </div>
-                        
-                        <div class="stat-card" onclick="showGoals('completed')">
-                            <div class="stat-icon">✅</div>
-                            <div class="stat-content">
-                                <div class="stat-number" id="completed-goals-count">0</div>
-                                <div class="stat-label">Objectifs terminés</div>
-                            </div>
+                <!-- Statistiques -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">🎯</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="active-goals-count">0</div>
+                            <div class="stat-label">Objectifs actifs</div>
                         </div>
                     </div>
-
-                    <!-- Ligne 2: Tâches -->
-                    <div class="stats-row">
-                        <div class="stat-card" onclick="showTodos('active')">
-                            <div class="stat-icon">📝</div>
-                            <div class="stat-content">
-                                <div class="stat-number" id="active-todos-count">0</div>
-                                <div class="stat-label">Tâches en cours</div>
-                            </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">✅</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="completed-goals-count">0</div>
+                            <div class="stat-label">Objectifs terminés</div>
                         </div>
-                        
-                        <div class="stat-card" onclick="showTodos('completed')">
-                            <div class="stat-icon">✅</div>
-                            <div class="stat-content">
-                                <div class="stat-number" id="completed-todos-count">0</div>
-                                <div class="stat-label">Tâches terminées</div>
-                            </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">📝</div>
+                        <div class="stat-content">
+                            <div class="stat-number" id="active-todos-count">0</div>
+                            <div class="stat-label">Tâches en cours</div>
                         </div>
                     </div>
                 </div>
@@ -1282,35 +913,6 @@
                             <textarea id="todo-description" placeholder="Décrivez votre tâche..." rows="3"></textarea>
                         </div>
 
-                        <div class="form-group">
-                            <label>Niveau de priorité *</label>
-                            <select id="todo-priority" required>
-                                <option value="low">🟢 Faible</option>
-                                <option value="medium" selected>🟡 Moyenne</option>
-                                <option value="high">🔴 Élevée</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Catégorie</label>
-                            <select id="todo-category">
-                                <option value="">Sélectionner une catégorie</option>
-                                <option value="work">💼 Travail</option>
-                                <option value="personal">👤 Personnel</option>
-                                <option value="health">🏥 Santé</option>
-                                <option value="finance">💰 Finance</option>
-                                <option value="education">📚 Éducation</option>
-                                <option value="home">🏠 Maison</option>
-                                <option value="shopping">🛒 Shopping</option>
-                                <option value="other">📋 Autre</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Date d'échéance (optionnel)</label>
-                            <input type="date" id="todo-due-date">
-                        </div>
-
                         <div class="form-actions">
                             <button type="button" onclick="showHome()">Annuler</button>
                             <button type="submit" class="btn-primary">Créer la tâche</button>
@@ -1326,12 +928,6 @@
                     <h2>🎯 Mes Objectifs</h2>
                 </div>
 
-                <div class="form-container" style="margin-bottom: 2rem;">
-                    <button class="btn-primary" onclick="showCreateGoal()" style="width: 100%; padding: 1rem; font-size: 1.1rem;">
-                        + Créer un nouvel objectif
-                    </button>
-                </div>
-
                 <div id="goals-container">
                     <!-- Les objectifs seront ajoutés ici dynamiquement -->
                 </div>
@@ -1342,12 +938,6 @@
                 <div class="page-header">
                     <button class="btn-back" onclick="showHome()">← Retour</button>
                     <h2>📝 Mes Tâches</h2>
-                </div>
-
-                <div class="form-container" style="margin-bottom: 2rem;">
-                    <button class="btn-primary" onclick="showCreateTodo()" style="width: 100%; padding: 1rem; font-size: 1.1rem; background: #6f42c1; border-color: #6f42c1;">
-                        + Créer une nouvelle tâche
-                    </button>
                 </div>
 
                 <div id="todos-stats" class="todo-stats-header hidden">
@@ -1379,18 +969,6 @@
 
                 <div id="todos-container">
                     <!-- Les tâches seront ajoutées ici dynamiquement -->
-                </div>
-            </div>
-
-            <!-- Page historique -->
-            <div id="history-page" class="hidden">
-                <div class="page-header">
-                    <button class="btn-back" onclick="showHome()">← Retour</button>
-                    <h2>📊 Historique</h2>
-                </div>
-
-                <div id="history-container">
-                    <!-- L'historique sera ajouté ici dynamiquement -->
                 </div>
             </div>
         </main>
@@ -1435,63 +1013,14 @@
             showPage('create-todo-page');
         }
 
-        function showGoals(filter = 'all') {
+        function showGoals() {
             showPage('goals-page');
-            renderGoals('all'); // Toujours afficher tous les objectifs sur la page objectifs
+            renderGoals();
         }
 
-        function showTodos(filter = 'all') {
+        function showTodos() {
             showPage('todos-page');
-            renderTodos(filter);
-        }
-
-        function showScheduledTodos() {
-            const today = new Date();
-            const todayString = today.toISOString().split('T')[0];
-            
-            const scheduledTodos = todos.filter(todo => {
-                if (!todo.dueDate) return false; // Tâches sans date ne sont pas programmées
-                const todoDate = new Date(todo.dueDate).toISOString().split('T')[0];
-                return todoDate !== todayString && !todo.archived;
-            });
-
-            if (scheduledTodos.length === 0) {
-                alert('Aucune tâche programmée pour les jours suivants.');
-                return;
-            }
-
-            // Créer une page temporaire pour afficher les tâches programmées
-            const container = document.getElementById('todos-container');
-            const originalContent = container.innerHTML;
-            
-            container.innerHTML = `
-                <div class="scheduled-todos-header">
-                    <h3>📅 Tâches programmées</h3>
-                    <button class="btn-back" onclick="renderTodos()">← Retour aux tâches d'aujourd'hui</button>
-                </div>
-                <div class="scheduled-todos-list">
-                    ${scheduledTodos.map(todo => `
-                        <div class="todo-card scheduled">
-                            <div class="todo-content">
-                                <div class="todo-header">
-                                    <h4>${todo.title}</h4>
-                                    <span class="scheduled-date">📅 ${new Date(todo.dueDate).toLocaleDateString('fr-FR')}</span>
-                                </div>
-                                ${todo.description ? `<p class="todo-description">${todo.description}</p>` : ''}
-                                <div class="todo-meta">
-                                    ${todo.priority ? `<span class="todo-priority priority-${todo.priority}">${getPriorityIcon(todo.priority)} ${getPriorityText(todo.priority)}</span>` : ''}
-                                    ${todo.category ? `<span class="todo-category">${getCategoryIcon(todo.category)} ${getCategoryText(todo.category)}</span>` : ''}
-                                </div>
-                            </div>
-                        </div>
-                    `).join('')}
-                </div>
-            `;
-        }
-
-        function showHistory() {
-            showPage('history-page');
-            renderHistory();
+            renderTodos();
         }
 
         // Gestion des objectifs
@@ -1511,65 +1040,6 @@
             updateStats();
         }
 
-        function addFunds(goalId) {
-            const amountInput = document.getElementById(`fund-amount-${goalId}`);
-            const amount = parseInt(amountInput.value);
-
-            if (!amount || amount <= 0) {
-                alert('Veuillez entrer un montant valide.');
-                return;
-            }
-
-            const goal = goals.find(g => g.id === goalId);
-            if (!goal) return;
-
-            // Ajouter le montant
-            goal.currentAmount = (goal.currentAmount || 0) + amount;
-            
-            // Ajouter à l'historique
-            goal.fundAdditions = goal.fundAdditions || [];
-            goal.fundAdditions.push({
-                amount: amount,
-                date: new Date().toISOString()
-            });
-
-            // Vérifier si l'objectif est atteint
-            if (goal.currentAmount >= goal.targetAmount) {
-                goal.completed = true;
-                goal.completedAt = new Date().toISOString();
-                
-                // Messages de célébration
-                const celebrationMessages = [
-                    "🎉 Félicitations ! Objectif atteint !",
-                    "🏆 Bravo ! Vous avez réussi !",
-                    "✨ Incroyable ! Mission accomplie !",
-                    "🎊 Excellent travail ! Objectif réalisé !",
-                    "🌟 Fantastique ! Vous l'avez fait !"
-                ];
-                const randomMessage = celebrationMessages[Math.floor(Math.random() * celebrationMessages.length)];
-                alert(randomMessage);
-            }
-
-            // Sauvegarder
-            localStorage.setItem('goals', JSON.stringify(goals));
-            updateStats();
-            renderGoals();
-            
-            // Réinitialiser l'input
-            amountInput.value = '';
-
-            // Message de confirmation
-            const confirmMessages = [
-                "💰 Montant ajouté avec succès !",
-                "✅ Fonds ajoutés ! Continuez comme ça !",
-                "🎯 Excellent ! Vous progressez !",
-                "💪 Bravo ! Chaque pas compte !",
-                "🚀 Super ! Vous avancez bien !"
-            ];
-            const randomConfirm = confirmMessages[Math.floor(Math.random() * confirmMessages.length)];
-            alert(randomConfirm);
-        }
-
         function updateGoal(goalId, updates) {
             const goalIndex = goals.findIndex(g => g.id === goalId);
             if (goalIndex !== -1) {
@@ -1579,7 +1049,7 @@
             }
         }
 
-        function renderGoals(filter = 'all') {
+        function renderGoals() {
             const container = document.getElementById('goals-container');
             const activeGoals = goals.filter(g => !g.completed && !g.archived && !g.deleted);
             const completedGoals = goals.filter(g => g.completed && !g.archived && !g.deleted);
@@ -1597,8 +1067,7 @@
 
             let html = '';
 
-            // Afficher les objectifs actifs
-            if ((filter === 'all' || filter === 'active') && activeGoals.length > 0) {
+            if (activeGoals.length > 0) {
                 html += `
                     <div class="goals-section">
                         <h3>Objectifs en cours (${activeGoals.length})</h3>
@@ -1608,7 +1077,7 @@
                                     <div class="goal-content">
                                         <div class="goal-header">
                                             <h4>${goal.title}</h4>
-                                            <span class="goal-status">En cours</span>
+                                            <button class="toggle-btn" onclick="toggleGoal(${goal.id})">⭕</button>
                                         </div>
                                         <p class="goal-description">${goal.description || ''}</p>
                                         <div class="goal-amount">
@@ -1617,15 +1086,6 @@
                                         </div>
                                         <div class="progress-bar">
                                             <div class="progress-fill" style="width: ${goal.targetAmount ? ((goal.currentAmount || 0) / goal.targetAmount) * 100 : 0}%"></div>
-                                        </div>
-                                        <div class="goal-progress">
-                                            <span class="progress-text">${goal.targetAmount ? Math.round(((goal.currentAmount || 0) / goal.targetAmount) * 100) : 0}% atteint</span>
-                                        </div>
-                                        <div class="add-funds-section">
-                                            <div class="add-funds-input">
-                                                <input type="number" id="fund-amount-${goal.id}" placeholder="Montant à ajouter" min="1">
-                                                <button class="btn-add-funds" onclick="addFunds(${goal.id})">💰 Ajouter</button>
-                                            </div>
                                         </div>
                                         <div class="goal-actions">
                                             <button class="btn-archive" onclick="archiveGoal(${goal.id})">📦 Archiver</button>
@@ -1639,8 +1099,7 @@
                 `;
             }
 
-            // Afficher les objectifs terminés
-            if ((filter === 'all' || filter === 'completed') && completedGoals.length > 0) {
+            if (completedGoals.length > 0) {
                 html += `
                     <div class="goals-section">
                         <h3>Objectifs terminés (${completedGoals.length})</h3>
@@ -1650,7 +1109,7 @@
                                     <div class="goal-content">
                                         <div class="goal-header">
                                             <h4>${goal.title}</h4>
-                                            <span class="goal-status completed">✅ Terminé</span>
+                                            <button class="toggle-btn" onclick="toggleGoal(${goal.id})">✅</button>
                                         </div>
                                         <p class="goal-description">${goal.description || ''}</p>
                                         <div class="goal-amount">
@@ -1667,18 +1126,6 @@
                                 </div>
                             `).join('')}
                         </div>
-                    </div>
-                `;
-            }
-
-            // Si aucun objectif ne correspond au filtre
-            if (filter !== 'all' && html === '') {
-                const filterText = filter === 'active' ? 'en cours' : 'terminés';
-                html = `
-                    <div class="empty-state">
-                        <div class="empty-icon">🎯</div>
-                        <h3>Aucun objectif ${filterText}</h3>
-                        <p>Créez des objectifs pour les voir ici !</p>
                     </div>
                 `;
             }
@@ -1726,25 +1173,11 @@
                 ...todoData,
                 id: Date.now(),
                 completed: false,
-                archived: false,
                 createdAt: new Date().toISOString()
             };
             todos.push(newTodo);
             localStorage.setItem('todos', JSON.stringify(todos));
             updateStats();
-        }
-
-        function archiveTodo(todoId) {
-            const todo = todos.find(t => t.id === todoId);
-            if (!todo) return;
-
-            const confirmMessage = `Archiver la tâche "${todo.title}" ?\n\nCette tâche sera déplacée vers l'historique.`;
-            
-            if (confirm(confirmMessage)) {
-                updateTodo(todoId, { archived: true });
-                renderTodos();
-                alert('Tâche archivée ! Elle apparaîtra dans l\'historique.');
-            }
         }
 
         function updateTodo(todoId, updates) {
@@ -1757,37 +1190,19 @@
         }
 
         function deleteTodo(todoId) {
-            const todo = todos.find(t => t.id === todoId);
-            if (!todo) return;
-
-            const confirmMessage = `Supprimer la tâche "${todo.title}" ?\n\nCette action est irréversible.`;
-            
-            if (confirm(confirmMessage)) {
-                todos = todos.filter(t => t.id !== todoId);
-                localStorage.setItem('todos', JSON.stringify(todos));
-                updateStats();
-                renderTodos();
-                alert('Tâche supprimée !');
-            }
+            todos = todos.filter(t => t.id !== todoId);
+            localStorage.setItem('todos', JSON.stringify(todos));
+            updateStats();
+            renderTodos();
         }
 
-        function renderTodos(filter = 'all') {
+        function renderTodos() {
             const container = document.getElementById('todos-container');
             const statsContainer = document.getElementById('todos-stats');
             
-            // Filtrer les tâches par date (afficher seulement celles d'aujourd'hui)
-            const today = new Date();
-            const todayString = today.toISOString().split('T')[0];
-            
-            const todayTodos = todos.filter(todo => {
-                if (!todo.dueDate) return true; // Tâches sans date = toujours affichées
-                const todoDate = new Date(todo.dueDate).toISOString().split('T')[0];
-                return todoDate === todayString;
-            });
-            
-            const inProgress = todayTodos.filter(t => !t.completed && !t.archived).length;
-            const completed = todayTodos.filter(t => t.completed && !t.archived).length;
-            const total = todayTodos.filter(t => !t.archived).length;
+            const inProgress = todos.filter(t => !t.completed).length;
+            const completed = todos.filter(t => t.completed).length;
+            const total = todos.length;
             const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
 
             // Mettre à jour les statistiques
@@ -1797,67 +1212,40 @@
             document.getElementById('todos-percentage').textContent = percentage + '%';
             document.getElementById('todos-progress-fill').style.width = percentage + '%';
 
-            // Masquer les stats si toutes les tâches sont archivées ou s'il n'y a pas de tâches
             if (total > 0) {
                 statsContainer.classList.remove('hidden');
             } else {
                 statsContainer.classList.add('hidden');
             }
 
-            if (todayTodos.length === 0) {
+            if (todos.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-icon">📝</div>
-                        <h3>Aucune tâche pour aujourd'hui</h3>
-                        <p>Créez des tâches pour aujourd'hui ou programmez-en pour demain !</p>
+                        <h3>Aucune tâche</h3>
+                        <p>Créez votre première tâche pour commencer !</p>
                     </div>
                 `;
                 return;
             }
 
-            // Filtrer les tâches selon le paramètre (exclure les archivées et utiliser seulement celles d'aujourd'hui)
-            let filteredTodos = todayTodos.filter(t => !t.archived);
-            if (filter === 'active') {
-                filteredTodos = filteredTodos.filter(t => !t.completed);
-            } else if (filter === 'completed') {
-                filteredTodos = filteredTodos.filter(t => t.completed);
-            }
-
-            // Si aucun résultat après filtrage
-            if (filter !== 'all' && filteredTodos.length === 0) {
-                const filterText = filter === 'active' ? 'en cours' : 'terminées';
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-icon">📝</div>
-                        <h3>Aucune tâche ${filterText}</h3>
-                        <p>Créez des tâches pour les voir ici !</p>
-                    </div>
-                `;
-                return;
-            }
-
-            container.innerHTML = filteredTodos.map(todo => `
+            container.innerHTML = todos.map(todo => `
                 <div class="todo-card ${todo.completed ? 'completed' : ''}">
                     <div class="todo-content">
                         <div class="todo-header">
-                            <h4>${todo.title}</h4>
+                            <h4>${todo.title}
+                                ${todo.executionCount > 0 ? `<span class="todo-execution-count">${todo.executionCount}</span>` : ''}
+                            </h4>
                             <div class="todo-actions">
-                                <button class="toggle-btn ${todo.completed ? 'completed' : ''}" onclick="toggleTodo(${todo.id})">
+                                <button class="toggle-btn" onclick="toggleTodo(${todo.id})">
                                     ${todo.completed ? '✅' : '⭕'}
                                 </button>
-                                ${todo.completed ? 
-                                    `<button class="archive-btn" onclick="archiveTodo(${todo.id})">📦 Archiver</button>` : 
-                                    ''
-                                }
+                                <button class="reschedule-btn-todo" onclick="showRescheduleMenu(${todo.id})">🔄</button>
                                 <button class="delete-btn" onclick="deleteTodo(${todo.id})">✕</button>
                             </div>
                         </div>
                         ${todo.description ? `<p class="todo-description">${todo.description}</p>` : ''}
-                        <div class="todo-meta">
-                            ${todo.priority ? `<span class="todo-priority priority-${todo.priority}">${getPriorityIcon(todo.priority)} ${getPriorityText(todo.priority)}</span>` : ''}
-                            ${todo.category ? `<span class="todo-category">${getCategoryIcon(todo.category)} ${getCategoryText(todo.category)}</span>` : ''}
-                            ${todo.dueDate ? `<span class="todo-due-date">📅 ${new Date(todo.dueDate).toLocaleDateString('fr-FR')}</span>` : ''}
-                        </div>
+                        ${todo.dueDate ? `<p class="todo-due-date">📅 ${new Date(todo.dueDate).toLocaleDateString('fr-FR')}</p>` : ''}
                     </div>
                 </div>
             `).join('');
@@ -1866,7 +1254,14 @@
         function toggleTodo(todoId) {
             const todo = todos.find(t => t.id === todoId);
             if (todo) {
+                const wasCompleted = todo.completed;
                 updateTodo(todoId, { completed: !todo.completed });
+                
+                // Si la tâche est marquée comme terminée, incrémenter le compteur
+                if (!wasCompleted && !todo.completed) {
+                    updateTodo(todoId, { executionCount: (todo.executionCount || 0) + 1 });
+                }
+                
                 renderTodos();
             }
         }
@@ -1875,158 +1270,11 @@
         function updateStats() {
             const activeGoals = goals.filter(g => !g.completed && !g.archived && !g.deleted);
             const completedGoals = goals.filter(g => g.completed && !g.archived && !g.deleted);
-            
-            // Filtrer les tâches d'aujourd'hui
-            const today = new Date();
-            const todayString = today.toISOString().split('T')[0];
-            
-            const todayTodos = todos.filter(todo => {
-                if (!todo.dueDate) return true; // Tâches sans date = toujours comptées
-                const todoDate = new Date(todo.dueDate).toISOString().split('T')[0];
-                return todoDate === todayString;
-            });
-            
-            const activeTodos = todayTodos.filter(t => !t.completed && !t.archived);
-            const completedTodos = todayTodos.filter(t => t.completed && !t.archived);
+            const activeTodos = todos.filter(t => !t.completed);
 
             document.getElementById('active-goals-count').textContent = activeGoals.length;
             document.getElementById('completed-goals-count').textContent = completedGoals.length;
             document.getElementById('active-todos-count').textContent = activeTodos.length;
-            document.getElementById('completed-todos-count').textContent = completedTodos.length;
-        }
-
-        // Historique
-        function renderHistory() {
-            const container = document.getElementById('history-container');
-            const allGoals = goals.filter(g => g.archived || g.deleted);
-            const allTodos = todos.filter(t => t.archived);
-
-            if (allGoals.length === 0 && allTodos.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-icon">📊</div>
-                        <h3>Aucun historique</h3>
-                        <p>Vos objectifs archivés et tâches terminées apparaîtront ici.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            let html = '';
-
-            if (allGoals.length > 0) {
-                html += `
-                    <div class="goals-section">
-                        <h3>Objectifs archivés/supprimés (${allGoals.length})</h3>
-                        <div class="goals-grid">
-                            ${allGoals.map(goal => `
-                                <div class="goal-card ${goal.deleted ? 'deleted' : 'archived'}">
-                                    <div class="goal-content">
-                                        <div class="goal-header">
-                                            <h4>${goal.title}</h4>
-                                            <span class="goal-status">${goal.deleted ? '❌ Supprimé' : '📦 Archivé'}</span>
-                                        </div>
-                                        <p class="goal-description">${goal.description || ''}</p>
-                                        <div class="goal-amount">
-                                            <span class="current">${(goal.currentAmount || 0).toLocaleString()} FCFA</span>
-                                            <span class="target">/ ${goal.targetAmount.toLocaleString()} FCFA</span>
-                                        </div>
-                                        <div class="progress-bar">
-                                            <div class="progress-fill" style="width: ${goal.targetAmount ? ((goal.currentAmount || 0) / goal.targetAmount) * 100 : 0}%"></div>
-                                        </div>
-                                        <div class="goal-actions">
-                                            ${goal.deleted ? `<button class="btn-restore" onclick="restoreGoal(${goal.id})">🔄 Restaurer</button>` : ''}
-                                        </div>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-
-            if (allTodos.length > 0) {
-                html += `
-                    <div class="goals-section">
-                        <h3>Tâches terminées (${allTodos.length})</h3>
-                        <div class="goals-grid">
-                            ${allTodos.map(todo => `
-                                <div class="todo-card completed">
-                                    <div class="todo-content">
-                                        <div class="todo-header">
-                                            <h4>${todo.title}</h4>
-                                            <span class="goal-status">✅ Terminé</span>
-                                        </div>
-                                        ${todo.description ? `<p class="todo-description">${todo.description}</p>` : ''}
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            }
-
-            container.innerHTML = html;
-        }
-
-        function restoreGoal(goalId) {
-            const goal = goals.find(g => g.id === goalId);
-            if (!goal) return;
-
-            const confirmMessage = `Restaurer l'objectif "${goal.title}" ?\n\nCet objectif redeviendra actif.`;
-            
-            if (confirm(confirmMessage)) {
-                updateGoal(goalId, { deleted: false, archived: false });
-                renderHistory();
-                alert('Objectif restauré ! Il apparaîtra à nouveau dans vos objectifs actifs.');
-            }
-        }
-
-        // Fonctions utilitaires pour les tâches
-        function getPriorityIcon(priority) {
-            const icons = {
-                'low': '🟢',
-                'medium': '🟡',
-                'high': '🔴'
-            };
-            return icons[priority] || '🟡';
-        }
-
-        function getPriorityText(priority) {
-            const texts = {
-                'low': 'Faible',
-                'medium': 'Moyenne',
-                'high': 'Élevée'
-            };
-            return texts[priority] || 'Moyenne';
-        }
-
-        function getCategoryIcon(category) {
-            const icons = {
-                'work': '💼',
-                'personal': '👤',
-                'health': '🏥',
-                'finance': '💰',
-                'education': '📚',
-                'home': '🏠',
-                'shopping': '🛒',
-                'other': '📋'
-            };
-            return icons[category] || '📋';
-        }
-
-        function getCategoryText(category) {
-            const texts = {
-                'work': 'Travail',
-                'personal': 'Personnel',
-                'health': 'Santé',
-                'finance': 'Finance',
-                'education': 'Éducation',
-                'home': 'Maison',
-                'shopping': 'Shopping',
-                'other': 'Autre'
-            };
-            return texts[category] || 'Autre';
         }
 
         // Événements
@@ -2065,9 +1313,6 @@
             
             const title = document.getElementById('todo-title').value.trim();
             const description = document.getElementById('todo-description').value.trim();
-            const priority = document.getElementById('todo-priority').value;
-            const category = document.getElementById('todo-category').value;
-            const dueDate = document.getElementById('todo-due-date').value;
 
             if (!title) {
                 alert('Veuillez remplir le titre.');
@@ -2077,9 +1322,7 @@
             addTodo({
                 title,
                 description,
-                priority,
-                category: category || undefined,
-                dueDate: dueDate ? new Date(dueDate).toISOString() : undefined
+                priority: 'medium'
             });
 
             // Réinitialiser le formulaire
@@ -2091,24 +1334,122 @@
         document.getElementById('home-btn').addEventListener('click', showHome);
         document.getElementById('goals-btn').addEventListener('click', showGoals);
         document.getElementById('todos-btn').addEventListener('click', showTodos);
-        document.getElementById('history-btn').addEventListener('click', showHistory);
+
+        // Variables pour la reprogrammation
+        let currentRescheduleTodoId = null;
+        let selectedRescheduleOption = null;
+
+        // Fonction pour afficher le menu de reprogrammation
+        function showRescheduleMenu(todoId) {
+            currentRescheduleTodoId = todoId;
+            selectedRescheduleOption = null;
+            document.getElementById('reschedule-menu').classList.remove('hidden');
+            document.getElementById('custom-date-input').classList.add('hidden');
+        }
+
+        // Fonction pour annuler la reprogrammation
+        function cancelReschedule() {
+            document.getElementById('reschedule-menu').classList.add('hidden');
+            currentRescheduleTodoId = null;
+            selectedRescheduleOption = null;
+        }
+
+        // Fonction pour confirmer la reprogrammation
+        function confirmReschedule() {
+            if (!currentRescheduleTodoId || !selectedRescheduleOption) {
+                alert('Veuillez sélectionner une option de reprogrammation.');
+                return;
+            }
+
+            const todo = todos.find(t => t.id === currentRescheduleTodoId);
+            if (!todo) return;
+
+            let newDate;
+            const today = new Date();
+
+            switch (selectedRescheduleOption) {
+                case 'tomorrow':
+                    newDate = new Date(today);
+                    newDate.setDate(today.getDate() + 1);
+                    break;
+                case 'day-after':
+                    newDate = new Date(today);
+                    newDate.setDate(today.getDate() + 2);
+                    break;
+                case 'custom':
+                    const customDate = document.getElementById('custom-date-input').value;
+                    if (!customDate) {
+                        alert('Veuillez sélectionner une date personnalisée.');
+                        return;
+                    }
+                    newDate = new Date(customDate);
+                    break;
+            }
+
+            // Mettre à jour la tâche
+            updateTodo(currentRescheduleTodoId, { 
+                dueDate: newDate.toISOString(),
+                completed: false // Remettre la tâche en cours
+            });
+
+            // Fermer le menu
+            cancelReschedule();
+            renderTodos();
+            alert('Tâche reprogrammée avec succès !');
+        }
+
+        // Gestion des options de reprogrammation
+        document.addEventListener('DOMContentLoaded', function() {
+            const rescheduleOptions = document.querySelectorAll('.reschedule-option');
+            rescheduleOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Désélectionner toutes les options
+                    rescheduleOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Sélectionner l'option cliquée
+                    this.classList.add('selected');
+                    selectedRescheduleOption = this.dataset.option;
+
+                    // Afficher/masquer l'input de date personnalisée
+                    const customDateInput = document.getElementById('custom-date-input');
+                    if (selectedRescheduleOption === 'custom') {
+                        customDateInput.classList.remove('hidden');
+                        // Définir la date minimale à demain
+                        const tomorrow = new Date();
+                        tomorrow.setDate(tomorrow.getDate() + 1);
+                        customDateInput.min = tomorrow.toISOString().split('T')[0];
+                    } else {
+                        customDateInput.classList.add('hidden');
+                    }
+                });
+            });
+        });
 
         // Initialisation
         updateStats();
-
-        // PWA Service Worker
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', function() {
-                navigator.serviceWorker.register('sw.js')
-                    .then(function(registration) {
-                        console.log('Service Worker enregistré avec succès');
-                    })
-                    .catch(function(error) {
-                        console.log('Échec de l\'enregistrement du Service Worker');
-                    });
-            });
-        }
     </script>
+
+    <!-- Menu de reprogrammation -->
+    <div id="reschedule-menu" class="reschedule-menu hidden">
+        <h3>🔄 Reprogrammer la tâche</h3>
+        <div class="reschedule-options">
+            <div class="reschedule-option" data-option="tomorrow">
+                📅 Demain
+            </div>
+            <div class="reschedule-option" data-option="day-after">
+                📅 Après-demain
+            </div>
+            <div class="reschedule-option" data-option="custom">
+                📅 Personnaliser
+            </div>
+        </div>
+        <input type="date" id="custom-date-input" class="custom-date-input hidden">
+        <div class="reschedule-actions">
+            <button class="reschedule-btn" onclick="confirmReschedule()">Reprogrammer</button>
+            <button class="cancel-reschedule-btn" onclick="cancelReschedule()">Annuler</button>
+        </div>
+    </div>
 </body>
 </html>
+
 
