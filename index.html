@@ -781,6 +781,23 @@
             background: #5a2d91;
         }
 
+        .archive-btn {
+            background: #00ff88;
+            color: #000000;
+            border: none;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.7rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-left: 0.3rem;
+        }
+
+        .archive-btn:hover {
+            background: #00cc6a;
+        }
+
         /* Notification de reprogrammation automatique */
         .auto-reschedule-notification {
             position: fixed;
@@ -1266,6 +1283,20 @@
             }
         }
 
+        function archiveTodo(todoId) {
+            const todo = todos.find(t => t.id === todoId);
+            if (!todo) return;
+
+            const confirmMessage = `Archiver la tâche "${todo.title}" ?\n\nCette tâche sera déplacée vers l'historique.`;
+            
+            if (confirm(confirmMessage)) {
+                updateTodo(todoId, { archived: true });
+                renderTodos();
+                alert('Tâche archivée ! Elle apparaîtra dans l\'historique.');
+            }
+        }
+
+
         function renderTodos() {
             const container = document.getElementById('todos-container');
             const statsContainer = document.getElementById('todos-stats');
@@ -1311,7 +1342,10 @@
                                     ${todo.completed ? '✅' : '⭕'}
                                 </button>
                                 <button class="reschedule-btn-todo" onclick="showRescheduleMenu(${todo.id})">🔄</button>
-                                <button class="delete-btn" onclick="deleteTodo(${todo.id})">✕</button>
+                                ${todo.completed ? 
+                                    `<button class="archive-btn" onclick="archiveTodo(${todo.id})">📦</button>` : 
+                                    `<button class="delete-btn" onclick="deleteTodo(${todo.id})">✕</button>`
+                                }
                             </div>
                         </div>
                         ${todo.description ? `<p class="todo-description">${todo.description}</p>` : ''}
@@ -1326,13 +1360,6 @@
             const allGoals = goals.filter(g => g.archived || g.deleted);
             const allTodos = todos.filter(t => t.archived || t.completed);
 
-            // Debug: Afficher toutes les données
-            console.log('=== DEBUG HISTORIQUE ===');
-            console.log('Tous les objectifs:', goals);
-            console.log('Objectifs archivés/supprimés:', allGoals);
-            console.log('Toutes les tâches:', todos);
-            console.log('Tâches pour l\'historique:', allTodos);
-            console.log('========================');
 
             if (allGoals.length === 0 && allTodos.length === 0) {
                 container.innerHTML = `
@@ -1451,10 +1478,8 @@
                 const wasCompleted = todo.completed;
                 updateTodo(todoId, { completed: !todo.completed });
                 
-                // Si la tâche est marquée comme terminée, incrémenter le compteur
-                if (!wasCompleted && !todo.completed) {
-                    updateTodo(todoId, { executionCount: (todo.executionCount || 0) + 1 });
-                }
+                // Pas d'incrémentation automatique ici
+                // L'incrémentation se fait seulement lors de la reprogrammation
                 
                 renderTodos();
             }
@@ -1581,11 +1606,21 @@
                     break;
             }
 
+            // Vérifier si la tâche était terminée avant la reprogrammation
+            const wasCompleted = todo.completed;
+            
             // Mettre à jour la tâche
             updateTodo(currentRescheduleTodoId, { 
                 dueDate: newDate.toISOString(),
                 completed: false // Remettre la tâche en cours
             });
+            
+            // Incrémenter le compteur seulement si la tâche était terminée
+            if (wasCompleted) {
+                updateTodo(currentRescheduleTodoId, { 
+                    executionCount: (todo.executionCount || 0) + 1 
+                });
+            }
 
             // Fermer le menu
             cancelReschedule();
