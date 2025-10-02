@@ -780,6 +780,47 @@
         .reschedule-btn-todo:hover {
             background: #5a2d91;
         }
+
+        /* Notification de reprogrammation automatique */
+        .auto-reschedule-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 255, 136, 0.95);
+            color: #000000;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 255, 136, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 255, 136, 0.5);
+            z-index: 1001;
+            max-width: 300px;
+            font-weight: 600;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        .auto-reschedule-notification .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #000000;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -1424,6 +1465,91 @@
                 });
             });
         });
+
+        // Fonction de reprogrammation automatique
+        function autoRescheduleIncompleteTodos() {
+            const today = new Date();
+            const todayString = today.toISOString().split('T')[0];
+            const tomorrow = new Date(today);
+            tomorrow.setDate(today.getDate() + 1);
+            const tomorrowString = tomorrow.toISOString().split('T')[0];
+
+            let hasChanges = false;
+            let rescheduledTasks = [];
+
+            todos.forEach(todo => {
+                // Si la tâche a une date d'échéance et n'est pas terminée
+                if (todo.dueDate && !todo.completed && !todo.archived) {
+                    const todoDate = new Date(todo.dueDate).toISOString().split('T')[0];
+                    
+                    // Si la tâche était prévue pour aujourd'hui ou une date passée
+                    if (todoDate <= todayString) {
+                        // Reprogrammer au lendemain
+                        todo.dueDate = tomorrow.toISOString();
+                        hasChanges = true;
+                        rescheduledTasks.push(todo.title);
+                        
+                        console.log(`Tâche "${todo.title}" reprogrammée automatiquement au lendemain`);
+                    }
+                }
+            });
+
+            if (hasChanges) {
+                localStorage.setItem('todos', JSON.stringify(todos));
+                updateStats();
+                renderTodos();
+                
+                // Afficher une notification
+                showAutoRescheduleNotification(rescheduledTasks);
+                console.log('Reprogrammation automatique effectuée');
+            }
+        }
+
+        // Fonction pour afficher la notification de reprogrammation automatique
+        function showAutoRescheduleNotification(tasks) {
+            const notification = document.createElement('div');
+            notification.className = 'auto-reschedule-notification';
+            
+            const taskList = tasks.length > 3 
+                ? tasks.slice(0, 3).join(', ') + ` et ${tasks.length - 3} autre(s)`
+                : tasks.join(', ');
+            
+            notification.innerHTML = `
+                <button class="close-btn" onclick="this.parentElement.remove()">×</button>
+                <div>🤖 Reprogrammation automatique</div>
+                <div style="font-size: 0.9rem; margin-top: 0.5rem;">
+                    ${tasks.length} tâche(s) reprogrammée(s) au lendemain :<br>
+                    <strong>${taskList}</strong>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Supprimer automatiquement après 5 secondes
+            setTimeout(() => {
+                if (notification.parentElement) {
+                    notification.remove();
+                }
+            }, 5000);
+        }
+
+        // Fonction pour vérifier et exécuter la reprogrammation automatique
+        function checkAndAutoReschedule() {
+            // Vérifier si c'est un nouveau jour (comparer avec la dernière vérification)
+            const today = new Date().toDateString();
+            const lastCheck = localStorage.getItem('lastAutoRescheduleCheck');
+            
+            if (lastCheck !== today) {
+                autoRescheduleIncompleteTodos();
+                localStorage.setItem('lastAutoRescheduleCheck', today);
+            }
+        }
+
+        // Exécuter la vérification au chargement de la page
+        checkAndAutoReschedule();
+
+        // Exécuter la vérification toutes les heures (optionnel)
+        setInterval(checkAndAutoReschedule, 60 * 60 * 1000); // 1 heure
 
         // Initialisation
         updateStats();
