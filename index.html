@@ -1301,9 +1301,11 @@
             const container = document.getElementById('todos-container');
             const statsContainer = document.getElementById('todos-stats');
             
-            const inProgress = todos.filter(t => !t.completed).length;
-            const completed = todos.filter(t => t.completed).length;
-            const total = todos.length;
+            // Filtrer les tâches non archivées
+            const activeTodos = todos.filter(t => !t.archived);
+            const inProgress = activeTodos.filter(t => !t.completed).length;
+            const completed = activeTodos.filter(t => t.completed).length;
+            const total = activeTodos.length;
             const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
 
             // Mettre à jour les statistiques
@@ -1319,7 +1321,7 @@
                 statsContainer.classList.add('hidden');
             }
 
-            if (todos.length === 0) {
+            if (activeTodos.length === 0) {
                 container.innerHTML = `
                     <div class="empty-state">
                         <div class="empty-icon">📝</div>
@@ -1330,7 +1332,7 @@
                 return;
             }
 
-            container.innerHTML = todos.map(todo => `
+            container.innerHTML = activeTodos.map(todo => `
                 <div class="todo-card ${todo.completed ? 'completed' : ''}">
                     <div class="todo-content">
                         <div class="todo-header">
@@ -1489,11 +1491,15 @@
         function updateStats() {
             const activeGoals = goals.filter(g => !g.completed && !g.archived && !g.deleted);
             const completedGoals = goals.filter(g => g.completed && !g.archived && !g.deleted);
-            const activeTodos = todos.filter(t => !t.completed);
+            
+            // Filtrer les tâches non archivées
+            const activeTodos = todos.filter(t => !t.completed && !t.archived);
+            const completedTodos = todos.filter(t => t.completed && !t.archived);
 
             document.getElementById('active-goals-count').textContent = activeGoals.length;
             document.getElementById('completed-goals-count').textContent = completedGoals.length;
             document.getElementById('active-todos-count').textContent = activeTodos.length;
+            document.getElementById('completed-todos-count').textContent = completedTodos.length;
         }
 
         // Événements
