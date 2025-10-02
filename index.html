@@ -1291,7 +1291,13 @@
             
             if (confirm(confirmMessage)) {
                 updateTodo(todoId, { archived: true });
-                renderTodos();
+                
+                // Debug: Vérifier que la tâche est bien archivée
+                console.log('Tâche archivée:', todo);
+                console.log('Toutes les tâches:', todos);
+                
+                updateStats(); // Mettre à jour les statistiques
+                renderTodos(); // Re-rendre la liste des tâches
                 alert('Tâche archivée ! Elle apparaîtra dans l\'historique.');
             }
         }
@@ -1360,7 +1366,7 @@
         function renderHistory() {
             const container = document.getElementById('history-container');
             const allGoals = goals.filter(g => g.archived || g.deleted);
-            const allTodos = todos.filter(t => t.archived || t.completed);
+            const allTodos = todos.filter(t => t.archived);
 
 
             if (allGoals.length === 0 && allTodos.length === 0) {
@@ -1408,21 +1414,18 @@
             }
 
             if (allTodos.length > 0) {
-                const completedTodos = allTodos.filter(t => t.completed && !t.archived);
-                const archivedTodos = allTodos.filter(t => t.archived);
-                
                 html += `
                     <div class="goals-section">
-                        <h3>Tâches terminées (${completedTodos.length})</h3>
+                        <h3>Tâches archivées (${allTodos.length})</h3>
                         <div class="goals-grid">
-                            ${completedTodos.map(todo => `
-                                <div class="todo-card completed">
+                            ${allTodos.map(todo => `
+                                <div class="todo-card archived">
                                     <div class="todo-content">
                                         <div class="todo-header">
                                             <h4>${todo.title}
                                                 ${todo.executionCount > 0 ? `<span class="todo-execution-count">${todo.executionCount}</span>` : ''}
                                             </h4>
-                                            <span class="goal-status">✅ Terminé</span>
+                                            <span class="goal-status">📦 Archivé</span>
                                         </div>
                                         ${todo.description ? `<p class="todo-description">${todo.description}</p>` : ''}
                                         ${todo.dueDate ? `<p class="todo-due-date">📅 ${new Date(todo.dueDate).toLocaleDateString('fr-FR')}</p>` : ''}
@@ -1432,30 +1435,6 @@
                         </div>
                     </div>
                 `;
-                
-                if (archivedTodos.length > 0) {
-                    html += `
-                        <div class="goals-section">
-                            <h3>Tâches archivées (${archivedTodos.length})</h3>
-                            <div class="goals-grid">
-                                ${archivedTodos.map(todo => `
-                                    <div class="todo-card archived">
-                                        <div class="todo-content">
-                                            <div class="todo-header">
-                                                <h4>${todo.title}
-                                                    ${todo.executionCount > 0 ? `<span class="todo-execution-count">${todo.executionCount}</span>` : ''}
-                                                </h4>
-                                                <span class="goal-status">📦 Archivé</span>
-                                            </div>
-                                            ${todo.description ? `<p class="todo-description">${todo.description}</p>` : ''}
-                                            ${todo.dueDate ? `<p class="todo-due-date">📅 ${new Date(todo.dueDate).toLocaleDateString('fr-FR')}</p>` : ''}
-                                        </div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    `;
-                }
             }
 
             container.innerHTML = html;
