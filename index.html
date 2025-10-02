@@ -1271,21 +1271,31 @@
 
         function updateTodo(todoId, updates) {
             const todoIndex = todos.findIndex(t => t.id === todoId);
+            console.log('updateTodo - todoId:', todoId, 'todoIndex:', todoIndex, 'updates:', updates);
+            
             if (todoIndex !== -1) {
+                const oldTodo = { ...todos[todoIndex] };
                 todos[todoIndex] = { ...todos[todoIndex], ...updates };
                 localStorage.setItem('todos', JSON.stringify(todos));
+                
+                console.log('updateTodo - Avant:', oldTodo);
+                console.log('updateTodo - Après:', todos[todoIndex]);
+                
                 updateStats();
+            } else {
+                console.error('updateTodo - Tâche non trouvée:', todoId);
             }
         }
 
         function deleteTodo(todoId) {
-            const todo = todos.find(t => t.id === todoId);
+            const id = parseInt(todoId);
+            const todo = todos.find(t => t.id === id);
             if (!todo) return;
 
             const confirmMessage = `Supprimer la tâche "${todo.title}" ?\n\nCette action est irréversible.`;
             
             if (confirm(confirmMessage)) {
-                todos = todos.filter(t => t.id !== todoId);
+                todos = todos.filter(t => t.id !== id);
                 localStorage.setItem('todos', JSON.stringify(todos));
                 updateStats();
                 renderTodos();
@@ -1294,13 +1304,14 @@
         }
 
         function archiveTodo(todoId) {
-            const todo = todos.find(t => t.id === todoId);
+            const id = parseInt(todoId);
+            const todo = todos.find(t => t.id === id);
             if (!todo) return;
 
             const confirmMessage = `Archiver la tâche "${todo.title}" ?\n\nCette tâche sera déplacée vers l'historique.`;
             
             if (confirm(confirmMessage)) {
-                updateTodo(todoId, { archived: true });
+                updateTodo(id, { archived: true });
                 
                 // Debug: Vérifier que la tâche est bien archivée
                 console.log('Tâche archivée:', todo);
@@ -1469,7 +1480,13 @@
         }
 
         function toggleTodo(todoId) {
-            const todo = todos.find(t => t.id === todoId);
+            // Convertir en nombre si nécessaire
+            const id = parseInt(todoId);
+            console.log('toggleTodo appelé avec:', todoId, 'converti en:', id);
+            
+            const todo = todos.find(t => t.id === id);
+            console.log('Tâche trouvée:', todo);
+            
             if (todo) {
                 const wasCompleted = todo.completed;
                 const newCompleted = !todo.completed;
@@ -1477,16 +1494,18 @@
                 // Debug: Afficher l'état avant et après
                 console.log('Avant toggle:', todo);
                 
-                updateTodo(todoId, { completed: newCompleted });
+                updateTodo(id, { completed: newCompleted });
                 
                 // Debug: Vérifier que la mise à jour a fonctionné
-                const updatedTodo = todos.find(t => t.id === todoId);
+                const updatedTodo = todos.find(t => t.id === id);
                 console.log('Après toggle:', updatedTodo);
                 
                 // Pas d'incrémentation automatique ici
                 // L'incrémentation se fait seulement lors de la reprogrammation
                 
                 renderTodos();
+            } else {
+                console.error('Tâche non trouvée avec ID:', id);
             }
         }
 
