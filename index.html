@@ -1064,6 +1064,11 @@
             renderTodos();
         }
 
+        function showHistory() {
+            showPage('history-page');
+            renderHistory();
+        }
+
         // Gestion des objectifs
         function addGoal(goalData) {
             const newGoal = {
@@ -1231,10 +1236,18 @@
         }
 
         function deleteTodo(todoId) {
-            todos = todos.filter(t => t.id !== todoId);
-            localStorage.setItem('todos', JSON.stringify(todos));
-            updateStats();
-            renderTodos();
+            const todo = todos.find(t => t.id === todoId);
+            if (!todo) return;
+
+            const confirmMessage = `Supprimer la tâche "${todo.title}" ?\n\nCette action est irréversible.`;
+            
+            if (confirm(confirmMessage)) {
+                todos = todos.filter(t => t.id !== todoId);
+                localStorage.setItem('todos', JSON.stringify(todos));
+                updateStats();
+                renderTodos();
+                alert('Tâche supprimée !');
+            }
         }
 
         function renderTodos() {
@@ -1290,6 +1303,95 @@
                     </div>
                 </div>
             `).join('');
+        }
+
+        function renderHistory() {
+            const container = document.getElementById('history-container');
+            const allGoals = goals.filter(g => g.archived || g.deleted);
+            const allTodos = todos.filter(t => t.archived);
+
+            if (allGoals.length === 0 && allTodos.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">📊</div>
+                        <h3>Aucun historique</h3>
+                        <p>Vos objectifs archivés et tâches terminées apparaîtront ici.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+
+            if (allGoals.length > 0) {
+                html += `
+                    <div class="goals-section">
+                        <h3>Objectifs archivés/supprimés (${allGoals.length})</h3>
+                        <div class="goals-grid">
+                            ${allGoals.map(goal => `
+                                <div class="goal-card ${goal.deleted ? 'deleted' : 'archived'}">
+                                    <div class="goal-content">
+                                        <div class="goal-header">
+                                            <h4>${goal.title}</h4>
+                                            <span class="goal-status">${goal.deleted ? '❌ Supprimé' : '📦 Archivé'}</span>
+                                        </div>
+                                        <p class="goal-description">${goal.description || ''}</p>
+                                        <div class="goal-amount">
+                                            <span class="current">${(goal.currentAmount || 0).toLocaleString()} FCFA</span>
+                                            <span class="target">/ ${goal.targetAmount.toLocaleString()} FCFA</span>
+                                        </div>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill" style="width: ${goal.targetAmount ? ((goal.currentAmount || 0) / goal.targetAmount) * 100 : 0}%"></div>
+                                        </div>
+                                        <div class="goal-actions">
+                                            ${goal.deleted ? `<button class="btn-restore" onclick="restoreGoal(${goal.id})">🔄 Restaurer</button>` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            if (allTodos.length > 0) {
+                html += `
+                    <div class="goals-section">
+                        <h3>Tâches terminées (${allTodos.length})</h3>
+                        <div class="goals-grid">
+                            ${allTodos.map(todo => `
+                                <div class="todo-card completed">
+                                    <div class="todo-content">
+                                        <div class="todo-header">
+                                            <h4>${todo.title}
+                                                ${todo.executionCount > 0 ? `<span class="todo-execution-count">${todo.executionCount}</span>` : ''}
+                                            </h4>
+                                            <span class="goal-status">✅ Terminé</span>
+                                        </div>
+                                        ${todo.description ? `<p class="todo-description">${todo.description}</p>` : ''}
+                                        ${todo.dueDate ? `<p class="todo-due-date">📅 ${new Date(todo.dueDate).toLocaleDateString('fr-FR')}</p>` : ''}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = html;
+        }
+
+        function restoreGoal(goalId) {
+            const goal = goals.find(g => g.id === goalId);
+            if (!goal) return;
+
+            const confirmMessage = `Restaurer l'objectif "${goal.title}" ?\n\nCet objectif redeviendra actif.`;
+            
+            if (confirm(confirmMessage)) {
+                updateGoal(goalId, { deleted: false, archived: false });
+                renderHistory();
+                alert('Objectif restauré ! Il apparaîtra à nouveau dans vos objectifs actifs.');
+            }
         }
 
         function toggleTodo(todoId) {
@@ -1375,6 +1477,7 @@
         document.getElementById('home-btn').addEventListener('click', showHome);
         document.getElementById('goals-btn').addEventListener('click', showGoals);
         document.getElementById('todos-btn').addEventListener('click', showTodos);
+        document.getElementById('history-btn').addEventListener('click', showHistory);
 
         // Variables pour la reprogrammation
         let currentRescheduleTodoId = null;
