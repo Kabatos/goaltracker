@@ -821,6 +821,22 @@
             color: #000000;
             font-weight: bold;
         }
+
+        /* Styles pour l'historique */
+        .todo-card.archived {
+            border-left: 4px solid #6f42c1;
+            background: rgba(111, 66, 193, 0.1);
+        }
+
+        .goal-card.archived {
+            border-left: 4px solid #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+        }
+
+        .goal-card.deleted {
+            border-left: 4px solid #e53e3e;
+            background: rgba(229, 62, 62, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -1308,7 +1324,15 @@
         function renderHistory() {
             const container = document.getElementById('history-container');
             const allGoals = goals.filter(g => g.archived || g.deleted);
-            const allTodos = todos.filter(t => t.archived);
+            const allTodos = todos.filter(t => t.archived || t.completed);
+
+            // Debug: Afficher toutes les données
+            console.log('=== DEBUG HISTORIQUE ===');
+            console.log('Tous les objectifs:', goals);
+            console.log('Objectifs archivés/supprimés:', allGoals);
+            console.log('Toutes les tâches:', todos);
+            console.log('Tâches pour l\'historique:', allTodos);
+            console.log('========================');
 
             if (allGoals.length === 0 && allTodos.length === 0) {
                 container.innerHTML = `
@@ -1355,11 +1379,14 @@
             }
 
             if (allTodos.length > 0) {
+                const completedTodos = allTodos.filter(t => t.completed && !t.archived);
+                const archivedTodos = allTodos.filter(t => t.archived);
+                
                 html += `
                     <div class="goals-section">
-                        <h3>Tâches terminées (${allTodos.length})</h3>
+                        <h3>Tâches terminées (${completedTodos.length})</h3>
                         <div class="goals-grid">
-                            ${allTodos.map(todo => `
+                            ${completedTodos.map(todo => `
                                 <div class="todo-card completed">
                                     <div class="todo-content">
                                         <div class="todo-header">
@@ -1376,6 +1403,30 @@
                         </div>
                     </div>
                 `;
+                
+                if (archivedTodos.length > 0) {
+                    html += `
+                        <div class="goals-section">
+                            <h3>Tâches archivées (${archivedTodos.length})</h3>
+                            <div class="goals-grid">
+                                ${archivedTodos.map(todo => `
+                                    <div class="todo-card archived">
+                                        <div class="todo-content">
+                                            <div class="todo-header">
+                                                <h4>${todo.title}
+                                                    ${todo.executionCount > 0 ? `<span class="todo-execution-count">${todo.executionCount}</span>` : ''}
+                                                </h4>
+                                                <span class="goal-status">📦 Archivé</span>
+                                            </div>
+                                            ${todo.description ? `<p class="todo-description">${todo.description}</p>` : ''}
+                                            ${todo.dueDate ? `<p class="todo-due-date">📅 ${new Date(todo.dueDate).toLocaleDateString('fr-FR')}</p>` : ''}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
             }
 
             container.innerHTML = html;
